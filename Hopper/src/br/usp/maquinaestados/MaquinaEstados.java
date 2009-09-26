@@ -10,13 +10,32 @@ import java.util.Iterator;
 public class MaquinaEstados {
 
     private ArrayList<Transicao> tabelaTransicoes = new ArrayList<Transicao>();
+    private ArrayList tabelaEstadosAceitacao = new ArrayList();
     private int estadoAtual;
+    private int estadoInicial;
 
-    public MaquinaEstados(ArrayList<Transicao> tabela) {
-        setTabelaTransicoes(tabela);
+    public int getEstadoInicial() {
+        return estadoInicial;
     }
 
-    //novoEstado = transitaEstado ( transicoes, estadoAtual, valorLido);
+    public void setEstadoInicial(int estadoInicial) {
+        this.estadoInicial = estadoInicial;
+    }
+
+    public ArrayList getTabelaEstadosAceitacao() {
+        return tabelaEstadosAceitacao;
+    }
+
+    public void setTabelaEstadosAceitacao(ArrayList tabelaEstadosAceitacao) {
+        this.tabelaEstadosAceitacao = tabelaEstadosAceitacao;
+    }
+
+    public MaquinaEstados(ArrayList<Transicao> tabela, int estadoInicial, ArrayList tabelaEstadosAceitacao) {
+        setTabelaTransicoes(tabela);
+        setEstadoInicial(estadoInicial);
+        setTabelaEstadosAceitacao(tabelaEstadosAceitacao);
+    }
+
     public ArrayList<Transicao> getTabelaTransicoes() {
         return tabelaTransicoes;
     }
@@ -33,20 +52,32 @@ public class MaquinaEstados {
         this.estadoAtual = estadoAtual;
     }
 
-    public void transita(int estado, String valorLido)
+    public String transita(String valorLido)
     {
-        setEstadoAtual(estado);
+        String acao = "";
         Iterator<Transicao> itTransicao = tabelaTransicoes.iterator();
+
         while(itTransicao.hasNext())
         {
             Transicao transicao = itTransicao.next();
             if(transicao.getEstadoAtual() == estadoAtual && transicao.getSimbolo().equals(valorLido))
             {
                 System.out.println("Estado Atual: " + estadoAtual);
-                setEstadoAtual(transicao.getProximoEstado());
+                int proximoEstado = transicao.getProximoEstado();
+                System.out.println("Próximo Estado: " + proximoEstado);
+                if(tabelaEstadosAceitacao.contains(proximoEstado))
+                {
+                    setEstadoAtual(estadoInicial);
+                }
+                else
+                {
+                    setEstadoAtual(proximoEstado);
+                }
+                acao = transicao.getAcao();
                 System.out.println("Mudou para o Estado " + estadoAtual);
             }
         }
+        return acao;
     }
 
 }

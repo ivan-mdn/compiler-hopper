@@ -1,6 +1,6 @@
-package br.usp.maquinaestados;
+package br.usp.lexico;
 
-import br.usp.lexico.ManipulacaoArquivo;
+import br.usp.maquinaestados.MaquinaEstados;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -9,65 +9,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
  *
  * @author nathalia
  */
-public class Main {
+public class ManipulacaoArquivo {
 
     private static Hashtable asciiTable = new Hashtable();
-    private static ArrayList<Transicao> tabelaTransicoes = new ArrayList<Transicao>();
-    private static ArrayList tabelaEstadosAceitacao = new ArrayList();
-    private static int estadoInicial = 0;
-    private static MaquinaEstados maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
-
-    public static ArrayList getTabelaEstadosAceitacao() {
-        return tabelaEstadosAceitacao;
-    }
-
-    public static void setTabelaEstadosAceitacao() {
-        tabelaEstadosAceitacao.add(11);
-        tabelaEstadosAceitacao.add(12);
-        tabelaEstadosAceitacao.add(13);
-        tabelaEstadosAceitacao.add(14);
-        tabelaEstadosAceitacao.add(16);
-        tabelaEstadosAceitacao.add(17);
-    }
-
-    public static int getEstadoInicial() {
-        return estadoInicial;
-    }
-
-    public static void setEstadoInicial(int estadoInicial) {
-        Main.estadoInicial = estadoInicial;
-    }
-
-    public static MaquinaEstados getMaquina() {
-        return maquina;
-    }
-
-    public static void setMaquina(MaquinaEstados maquina) {
-        Main.maquina = maquina;
-    }
-
-    public static ArrayList<Transicao> getTabelaTransicoes() {
-        return tabelaTransicoes;
-    }
-
-    public static void setTabelaTransicoes() {
-        tabelaTransicoes.add(new Transicao(0,  10, "<", "nada"));
-        tabelaTransicoes.add(new Transicao(0,  14, "=", "nada"));
-        tabelaTransicoes.add(new Transicao(0,  15, ">", "nada"));
-        tabelaTransicoes.add(new Transicao(10, 11, "=", "nada"));
-        tabelaTransicoes.add(new Transicao(10, 12, ">", "nada"));
-        tabelaTransicoes.add(new Transicao(10, 13, "other", "nada"));
-        tabelaTransicoes.add(new Transicao(15, 16, "=", "nada"));
-        tabelaTransicoes.add(new Transicao(15, 17, "other", "nada"));
-    }
-
+    
     public static Hashtable getAsciiTable() {
         return asciiTable;
     }
@@ -172,19 +123,7 @@ public class Main {
         asciiTable.put(127, "DEL");
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-
-        setAsciiTable();
-        setTabelaTransicoes();
-        setTabelaEstadosAceitacao();
-        //ManipulacaoArquivo.compileArchive(maquina);
-        compileArchive();
-    }
-
-    private static void compileArchive()
+    public static void compileArchive(MaquinaEstados maquina)
     {
         String archive = null;
         try
@@ -196,7 +135,7 @@ public class Main {
                 while (buf.ready())
                 {
                     archive = buf.readLine();
-                    readAndWriteArchive(archive);
+                    readAndWriteArchive(archive, maquina);
                     System.exit(0);
                 }
             }
@@ -207,7 +146,7 @@ public class Main {
         }
     }
 
-    private static void readAndWriteArchive(String archive)
+    public static void readAndWriteArchive(String archive, MaquinaEstados maquina)
     {
         try
         {
