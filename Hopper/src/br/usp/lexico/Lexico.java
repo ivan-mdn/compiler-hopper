@@ -450,16 +450,12 @@ public class Lexico {
 
                     if(!tabelaSimbolos.containsKey(pilha))
                     {
-                        if(palavrasReservadas.containsValue(pilha))
-                        {
-                            tipo = (String) palavrasReservadas.get(pilha);
-                        }
-                        else
+                        if(!palavrasReservadas.containsValue(pilha))
                         {
                             tipo = "identificador";
+                            tabelaSimbolos.put(pilha, new Simbolo(codigo, pilha, tipo));
+                            codigo++;
                         }
-                        tabelaSimbolos.put(pilha, new Simbolo(codigo, pilha, tipo));
-                        codigo++;
                     }
                     bw.write(pilha);
                     bw.newLine();
@@ -470,16 +466,12 @@ public class Lexico {
                     other = letra;
                     if(!tabelaSimbolos.containsKey(pilha))
                     {
-                        if(palavrasReservadas.containsValue(pilha))
-                        {
-                            tipo = (String) palavrasReservadas.get(pilha);
-                        }
-                        else
+                        if(!palavrasReservadas.containsValue(pilha))
                         {
                             tipo = "identificador";
+                            tabelaSimbolos.put(pilha, new Simbolo(codigo, pilha, tipo));
+                            codigo++;
                         }
-                        tabelaSimbolos.put(pilha, new Simbolo(codigo, pilha, tipo));
-                        codigo++;
                     }
                     bw.write(pilha);
                     if(!pilha.equals(""))
@@ -498,6 +490,7 @@ public class Lexico {
                     bw.newLine();
                 }
             }
+            System.out.println(tabelaSimbolos);
             in.close();
             bw.close();
             
