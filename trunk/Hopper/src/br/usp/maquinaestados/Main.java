@@ -1,6 +1,5 @@
 package br.usp.maquinaestados;
 
-import br.usp.lexico.ManipulacaoArquivo;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -180,7 +179,6 @@ public class Main {
         setAsciiTable();
         setTabelaTransicoes();
         setTabelaEstadosAceitacao();
-        //ManipulacaoArquivo.compileArchive(maquina);
         compileArchive();
     }
 

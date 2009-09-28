@@ -54,28 +54,31 @@ public class MaquinaEstados {
 
     public String transita(String valorLido)
     {
+        boolean achou = false;
         String acao = "";
         Iterator<Transicao> itTransicao = tabelaTransicoes.iterator();
 
-        while(itTransicao.hasNext())
+        while(itTransicao.hasNext() && !achou)
         {
             Transicao transicao = itTransicao.next();
-            if(transicao.getEstadoAtual() == estadoAtual && transicao.getSimbolo().equals(valorLido))
-            {
-                System.out.println("Estado Atual: " + estadoAtual);
-                int proximoEstado = transicao.getProximoEstado();
-                System.out.println("Próximo Estado: " + proximoEstado);
-                if(tabelaEstadosAceitacao.contains(proximoEstado))
+            if(transicao.getEstadoAtual() == estadoAtual)
+                if(transicao.getSimbolo().equals(valorLido) || transicao.getSimbolo().equals("other"))
                 {
-                    setEstadoAtual(estadoInicial);
+                    System.out.println("Estado Atual: " + estadoAtual);
+                    int proximoEstado = transicao.getProximoEstado();
+                    System.out.println("Próximo Estado: " + proximoEstado);
+                    if(tabelaEstadosAceitacao.contains(proximoEstado))
+                    {
+                        setEstadoAtual(estadoInicial);
+                    }
+                    else
+                    {
+                        setEstadoAtual(proximoEstado);
+                    }
+                    acao = transicao.getAcao();
+                    System.out.println("Mudou para o Estado " + estadoAtual);
+                    achou = true;
                 }
-                else
-                {
-                    setEstadoAtual(proximoEstado);
-                }
-                acao = transicao.getAcao();
-                System.out.println("Mudou para o Estado " + estadoAtual);
-            }
         }
         return acao;
     }
