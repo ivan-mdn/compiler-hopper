@@ -1,6 +1,8 @@
+if
+i
 <=
-a
-g
-o
-r
-a
+agora
+i
+=
+1
+;
