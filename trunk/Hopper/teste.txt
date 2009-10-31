@@ -1,2 +1,2 @@
-if i <= agora
+if i == agora
     i = 1;
