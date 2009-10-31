@@ -174,9 +174,10 @@ public class Lexico {
         tabelaEstadosAceitacao.add(11);
         tabelaEstadosAceitacao.add(12);
         tabelaEstadosAceitacao.add(13);
-        tabelaEstadosAceitacao.add(14);
+        tabelaEstadosAceitacao.add(15);
         tabelaEstadosAceitacao.add(16);
-        tabelaEstadosAceitacao.add(17);
+        tabelaEstadosAceitacao.add(18);
+        tabelaEstadosAceitacao.add(19);
     }
 
     public static int getEstadoInicial() {
@@ -359,7 +360,7 @@ public class Lexico {
         tabelaTransicoes.add(new Transicao(6,  6,  "9", "empilha"));
         tabelaTransicoes.add(new Transicao(6,  7,  "other", "desempilha"));
         tabelaTransicoes.add(new Transicao(0,  10, "<", "empilha"));
-        tabelaTransicoes.add(new Transicao(0,  14, "=", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  14, "=", "empilha"));
         tabelaTransicoes.add(new Transicao(0,  15, ">", "empilha"));
         tabelaTransicoes.add(new Transicao(0,  8,  "LF", "ignora"));
         tabelaTransicoes.add(new Transicao(0,  8,  "SPACE", "ignora"));
@@ -371,8 +372,10 @@ public class Lexico {
         tabelaTransicoes.add(new Transicao(10, 11, "=", "colocaTabelaSimbolos"));
         tabelaTransicoes.add(new Transicao(10, 12, ">", "colocaTabelaSimbolos"));
         tabelaTransicoes.add(new Transicao(10, 13, "other", "desempilha"));
-        tabelaTransicoes.add(new Transicao(15, 16, "=", "colocaTabelaSimbolos"));
-        tabelaTransicoes.add(new Transicao(15, 17, "other", "desempilha"));
+        tabelaTransicoes.add(new Transicao(14, 15, "=", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(14, 16, "other", "desempilha"));
+        tabelaTransicoes.add(new Transicao(17, 18, "=", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(17, 19, "other", "desempilha"));
     }
 
     /**
