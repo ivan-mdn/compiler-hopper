@@ -1,2 +1,7 @@
-if i == agora
-    i = 1;
+program
+    int i;
+    i = 0;
+    if(i == 0) then
+            i = 1;
+        endif
+end

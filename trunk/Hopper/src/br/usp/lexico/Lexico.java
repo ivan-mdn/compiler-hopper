@@ -24,16 +24,16 @@ public class Lexico {
     private static Hashtable palavrasReservadas = new Hashtable();
     private static ArrayList tabelaEstadosAceitacao = new ArrayList();
     private static int estadoInicial = 0;
-    private static MaquinaEstados maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+    private static MaquinaEstados maquinaLexico = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
 
     public Lexico() {
         setAsciiTable();
         setTabelaTransicoes();
         setTabelaEstadosAceitacao();
         setPalavrasReservadas();
-        maquina.setTabelaTransicoes(tabelaTransicoes);
-        maquina.setTabelaEstadosAceitacao(tabelaEstadosAceitacao);
-        maquina.setEstadoInicial(estadoInicial);
+        maquinaLexico.setTabelaTransicoes(tabelaTransicoes);
+        maquinaLexico.setTabelaEstadosAceitacao(tabelaEstadosAceitacao);
+        maquinaLexico.setEstadoInicial(estadoInicial);
     }
     
     public static Hashtable getPalavrasReservadas() {
@@ -228,11 +228,11 @@ public class Lexico {
     }
 
     public static MaquinaEstados getMaquina() {
-        return maquina;
+        return maquinaLexico;
     }
 
     public static void setMaquina(MaquinaEstados maquina) {
-        Lexico.maquina = maquina;
+        Lexico.maquinaLexico = maquina;
     }
 
     public static ArrayList<Transicao> getTabelaTransicoes() {
@@ -479,7 +479,7 @@ public class Lexico {
                 }
                 
                 System.out.println("Símbolo: " + asciiTable.get(letra));
-                String acao = maquina.transita((String) asciiTable.get(letra));
+                String acao = maquinaLexico.transita((String) asciiTable.get(letra));
                 System.out.println("Ação a ser tomada: " + acao);
                 
                 if(acao.equals("empilha"))
@@ -528,11 +528,9 @@ public class Lexico {
                 }
                 else
                 {
-                    bw.write((String) asciiTable.get(letra));
-                    bw.newLine();
+                    System.out.println("Não existe ação definida!");
                 }
             }
-            System.out.println(tabelaSimbolos);
             in.close();
             bw.close();
             
