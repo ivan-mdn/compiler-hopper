@@ -83,4 +83,8 @@ public class MaquinaEstados {
         return acao;
     }
 
+    public boolean isEstadoAceitacao(){
+        return tabelaEstadosAceitacao.contains(estadoAtual);
+    }
+
 }
