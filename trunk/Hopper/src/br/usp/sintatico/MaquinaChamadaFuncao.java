@@ -8,33 +8,23 @@ import br.usp.maquinaestados.Transicao;
  *
  * @author nathalia
  */
-public class MaquinaPrograma extends SubMaquina{
+public class MaquinaChamadaFuncao extends SubMaquina{
 
-    public MaquinaPrograma() {
+    public MaquinaChamadaFuncao() {
         estadoInicial = 0;
-        tabelaTransicoes.add(new Transicao(0, 1, "program", "ignora"));
-        tabelaTransicoes.add(new Transicao(1, 2, "function", "chamaFuncao"));
-        tabelaTransicoes.add(new Transicao(1, 3, "int", "chamaDeclaracao"));
-        tabelaTransicoes.add(new Transicao(1, 3, "float", "chamaDeclaracao"));
-        tabelaTransicoes.add(new Transicao(1, 3, "string", "chamaDeclaracao"));
-        tabelaTransicoes.add(new Transicao(1, 3, "boolean", "chamaDeclaracao"));
-        tabelaTransicoes.add(new Transicao(1, 3, "input", "chamaEntrada"));
-        tabelaTransicoes.add(new Transicao(1, 3, "output", "chamaSaida"));
-        tabelaTransicoes.add(new Transicao(1, 3, "if", "chamaCondicional"));
-        tabelaTransicoes.add(new Transicao(1, 3, "while", "chamaIteracao"));
-        tabelaTransicoes.add(new Transicao(1, 3, "for", "chamaIteracao"));
-        tabelaTransicoes.add(new Transicao(1, 3, "identificador", "chamaAtribuicao"));
-        tabelaTransicoes.add(new Transicao(1, 4, "end", "ignora"));
-        tabelaTransicoes.add(new Transicao(2, 1, "vazio", "ignora"));
-        tabelaTransicoes.add(new Transicao(3, 1, "vazio", "ignora"));
+
+        tabelaTransicoes.add(new Transicao(0, 1, "identificador", "chamaIdentificador"));
+        tabelaTransicoes.add(new Transicao(1, 2, "(", "ignora"));
+        //tabelaTransicoes.add(new Transicao(2, 3, "expressao", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(3, 2, ",", "ignora"));
+        tabelaTransicoes.add(new Transicao(3, 4, ")", "ignora"));
 
         tabelaEstadosAceitacao.add(4);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
     }
 
-    public boolean trataToken(Simbolo token)
-    {
+    public boolean trataToken(Simbolo token) {
         boolean retorno = false;
 
         String acao = maquina.transita(token.getTipo());
@@ -77,6 +67,11 @@ public class MaquinaPrograma extends SubMaquina{
             subMaquina = new MaquinaAtribuicao();
             retorno = subMaquina.processaToken(token);
         }
+        else if(acao.equals("chamaIdentificador"))
+        {
+            subMaquina = new MaquinaIdentificador();
+            retorno = subMaquina.processaToken(token);
+        }
         else
         {
             System.out.println("Não existe ação definida!");
@@ -84,6 +79,5 @@ public class MaquinaPrograma extends SubMaquina{
 
         return retorno;
     }
-
 
 }

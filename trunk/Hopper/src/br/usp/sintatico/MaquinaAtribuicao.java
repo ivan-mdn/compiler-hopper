@@ -8,14 +8,15 @@ import br.usp.maquinaestados.Transicao;
  *
  * @author nathalia
  */
-public class MaquinaEntrada extends SubMaquina{
+public class MaquinaAtribuicao extends SubMaquina{
 
-    public MaquinaEntrada() {
+    public MaquinaAtribuicao() {
         estadoInicial = 0;
-        tabelaTransicoes.add(new Transicao(0, 1, "input", "ignora"));
-        tabelaTransicoes.add(new Transicao(1, 2, "identificador", "chamaIdentificador"));
+        tabelaTransicoes.add(new Transicao(0, 1, "identificador", "chamaIdentificador"));
+        tabelaTransicoes.add(new Transicao(1, 2, "=", "ignora"));
+        //tabelaTransicoes.add(new Transicao(2, 3, "expressao", "chamaExpressao"));
 
-        tabelaEstadosAceitacao.add(2);
+        tabelaEstadosAceitacao.add(3);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
     }
