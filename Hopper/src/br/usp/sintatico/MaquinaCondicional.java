@@ -14,7 +14,13 @@ public class MaquinaCondicional extends SubMaquina{
         estadoInicial = 0;
         tabelaTransicoes.add(new Transicao(0, 1, "if", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "(", "ignora"));
-        //tabelaTransicoes.add(new Transicao(2, 3, "condicao", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "(", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "-", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "true", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "false", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "identificador", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "numero", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "not", "chamaCondicao"));
         tabelaTransicoes.add(new Transicao(3, 4, ")", "ignora"));
         tabelaTransicoes.add(new Transicao(4, 5, "then", "ignora"));
         tabelaTransicoes.add(new Transicao(5, 6, "int", "chamaDeclaracao"));
@@ -57,6 +63,11 @@ public class MaquinaCondicional extends SubMaquina{
         {
 
         }
+        else if(acao.equals("chamaAtribuicao"))
+        {
+            subMaquina = new MaquinaAtribuicao();
+            retorno = subMaquina.processaToken(token);
+        }
         else if(acao.equals("chamaDeclaracao"))
         {
             subMaquina = new MaquinaDeclaracao();
@@ -85,6 +96,11 @@ public class MaquinaCondicional extends SubMaquina{
         else if(acao.equals("chamaIdentificador"))
         {
             subMaquina = new MaquinaIdentificador();
+            retorno = subMaquina.processaToken(token);
+        }
+        else if(acao.equals("chamaCondicao"))
+        {
+            subMaquina = new MaquinaCondicao();
             retorno = subMaquina.processaToken(token);
         }
         else

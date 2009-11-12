@@ -13,12 +13,27 @@ public class MaquinaFator extends SubMaquina{
     public MaquinaFator() {
         estadoInicial = 0;
 
-        //tabelaTransicoes.add(new Transicao(0, 1, "fator", "chamaFator"));
-        //tabelaTransicoes.add(new Transicao(1, 2, "+", "ignora"));
-        //tabelaTransicoes.add(new Transicao(1, 2, "-", "ignora"));
-        //tabelaTransicoes.add(new Transicao(3, 2, "fator", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(0, 4, "numero", "ignora"));
+        tabelaTransicoes.add(new Transicao(0, 4, "true", "ignora"));
+        tabelaTransicoes.add(new Transicao(0, 4, "false", "ignora"));
+        tabelaTransicoes.add(new Transicao(0, 4, "identificador", "chamaIdentificador"));
+        tabelaTransicoes.add(new Transicao(0, 1, "(", "ignora"));
+        tabelaTransicoes.add(new Transicao(0, 3, "-", "ignora"));
+        tabelaTransicoes.add(new Transicao(1, 2, "(", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "-", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "true", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "false", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "identificador", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "numero", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(2, 4, ")", "ignora"));
+        tabelaTransicoes.add(new Transicao(3, 4, "(", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "-", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "true", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "false", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "identificador", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "numero", "chamaExpressao"));
 
-        tabelaEstadosAceitacao.add(1);
+        tabelaEstadosAceitacao.add(4);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
     }
@@ -31,49 +46,14 @@ public class MaquinaFator extends SubMaquina{
         {
 
         }
-        else if(acao.equals("chamaFuncao"))
-        {
-            subMaquina = new MaquinaFuncao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaDeclaracao"))
-        {
-            subMaquina = new MaquinaDeclaracao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaEntrada"))
-        {
-            subMaquina = new MaquinaEntrada();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaSaida"))
-        {
-            subMaquina = new MaquinaSaida();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaCondicional"))
-        {
-            subMaquina = new MaquinaCondicional();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaIteracao"))
-        {
-            subMaquina = new MaquinaIteracao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaAtribuicao"))
-        {
-            subMaquina = new MaquinaAtribuicao();
-            retorno = subMaquina.processaToken(token);
-        }
         else if(acao.equals("chamaIdentificador"))
         {
             subMaquina = new MaquinaIdentificador();
             retorno = subMaquina.processaToken(token);
         }
-        else if(acao.equals("chamaFator"))
+        else if(acao.equals("chamaExpressao"))
         {
-            subMaquina = new MaquinaFator();
+            subMaquina = new MaquinaExpressao();
             retorno = subMaquina.processaToken(token);
         }
         else

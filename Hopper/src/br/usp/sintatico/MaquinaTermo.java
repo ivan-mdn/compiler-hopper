@@ -12,11 +12,20 @@ public class MaquinaTermo extends SubMaquina{
 
     public MaquinaTermo() {
         estadoInicial = 0;
-
-        //tabelaTransicoes.add(new Transicao(0, 1, "fator", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(0, 1, "(", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(0, 1, "-", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(0, 1, "true", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(0, 1, "false", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(0, 1, "identificador", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(0, 1, "numero", "chamaFator"));
         tabelaTransicoes.add(new Transicao(1, 2, "+", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "-", "ignora"));
-        //tabelaTransicoes.add(new Transicao(3, 2, "fator", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(3, 2, "(", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(3, 2, "-", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(3, 2, "true", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(3, 2, "false", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(3, 2, "identificador", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(3, 2, "numero", "chamaFator"));
 
         tabelaEstadosAceitacao.add(1);
 
@@ -30,46 +39,6 @@ public class MaquinaTermo extends SubMaquina{
         if(acao.equals("ignora"))
         {
 
-        }
-        else if(acao.equals("chamaFuncao"))
-        {
-            subMaquina = new MaquinaFuncao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaDeclaracao"))
-        {
-            subMaquina = new MaquinaDeclaracao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaEntrada"))
-        {
-            subMaquina = new MaquinaEntrada();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaSaida"))
-        {
-            subMaquina = new MaquinaSaida();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaCondicional"))
-        {
-            subMaquina = new MaquinaCondicional();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaIteracao"))
-        {
-            subMaquina = new MaquinaIteracao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaAtribuicao"))
-        {
-            subMaquina = new MaquinaAtribuicao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaIdentificador"))
-        {
-            subMaquina = new MaquinaIdentificador();
-            retorno = subMaquina.processaToken(token);
         }
         else if(acao.equals("chamaFator"))
         {
