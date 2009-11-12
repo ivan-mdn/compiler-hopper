@@ -13,7 +13,12 @@ public class MaquinaSaida extends SubMaquina{
     public MaquinaSaida() {
         estadoInicial = 0;
         tabelaTransicoes.add(new Transicao(0, 1, "output", "ignora"));
-        //tabelaTransicoes.add(new Transicao(1, 2, "expressao", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "(", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "-", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "true", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "false", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "identificador", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(1, 2, "numero", "chamaExpressao"));
 
         tabelaEstadosAceitacao.add(2);
 
@@ -28,6 +33,11 @@ public class MaquinaSaida extends SubMaquina{
         if(acao.equals("ignora"))
         {
 
+        }
+        else if(acao.equals("chamaExpressao"))
+        {
+            subMaquina = new MaquinaExpressao();
+            retorno = subMaquina.processaToken(token);
         }
         else
         {

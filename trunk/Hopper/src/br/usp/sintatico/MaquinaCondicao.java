@@ -13,7 +13,12 @@ public class MaquinaCondicao extends SubMaquina{
     public MaquinaCondicao() {
         estadoInicial = 0;
 
-        //tabelaTransicoes.add(new Transicao(0, 1, "expressao", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(0, 1, "(", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(0, 1, "-", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(0, 1, "true", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(0, 1, "false", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(0, 1, "identificador", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(0, 1, "numero", "chamaExpressao"));
         tabelaTransicoes.add(new Transicao(0, 3, "not", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "<", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, ">", "ignora"));
@@ -21,11 +26,22 @@ public class MaquinaCondicao extends SubMaquina{
         tabelaTransicoes.add(new Transicao(1, 2, ">=", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "==", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "<>", "ignora"));
-        //tabelaTransicoes.add(new Transicao(2, 4, "expressao", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(2, 4, "(", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(2, 4, "-", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(2, 4, "true", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(2, 4, "false", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(2, 4, "identificador", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(2, 4, "numero", "chamaExpressao"));
         tabelaTransicoes.add(new Transicao(3, 4, "true", "ignora"));
         tabelaTransicoes.add(new Transicao(3, 4, "false", "ignora"));
         tabelaTransicoes.add(new Transicao(3, 4, "(", "ignora"));
-        //tabelaTransicoes.add(new Transicao(3, 4, "condicao", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "(", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "-", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "true", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "false", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "identificador", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "numero", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(3, 4, "not", "chamaCondicao"));
 
         tabelaEstadosAceitacao.add(4);
 
@@ -40,44 +56,14 @@ public class MaquinaCondicao extends SubMaquina{
         {
 
         }
-        else if(acao.equals("chamaFuncao"))
+        else if(acao.equals("chamaExpressao"))
         {
-            subMaquina = new MaquinaFuncao();
+            subMaquina = new MaquinaExpressao();
             retorno = subMaquina.processaToken(token);
         }
-        else if(acao.equals("chamaDeclaracao"))
+        else if(acao.equals("chamaCondicao"))
         {
-            subMaquina = new MaquinaDeclaracao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaEntrada"))
-        {
-            subMaquina = new MaquinaEntrada();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaSaida"))
-        {
-            subMaquina = new MaquinaSaida();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaCondicional"))
-        {
-            subMaquina = new MaquinaCondicional();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaIteracao"))
-        {
-            subMaquina = new MaquinaIteracao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaAtribuicao"))
-        {
-            subMaquina = new MaquinaAtribuicao();
-            retorno = subMaquina.processaToken(token);
-        }
-        else if(acao.equals("chamaIdentificador"))
-        {
-            subMaquina = new MaquinaIdentificador();
+            subMaquina = new MaquinaCondicao();
             retorno = subMaquina.processaToken(token);
         }
         else

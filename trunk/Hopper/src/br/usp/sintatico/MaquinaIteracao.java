@@ -15,7 +15,13 @@ public class MaquinaIteracao extends SubMaquina{
         tabelaTransicoes.add(new Transicao(0, 1, "while", "ignora"));
         tabelaTransicoes.add(new Transicao(0, 7, "for", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "(", "ignora"));
-        //tabelaTransicoes.add(new Transicao(2, 3, "condicao", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "(", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "-", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "true", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "false", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "identificador", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "numero", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(2, 3, "not", "chamaCondicao"));
         tabelaTransicoes.add(new Transicao(3, 4, ")", "ignora"));
         tabelaTransicoes.add(new Transicao(4, 5, "do", "ignora"));
         tabelaTransicoes.add(new Transicao(5, 6, "int", "chamaDeclaracao"));
@@ -31,9 +37,19 @@ public class MaquinaIteracao extends SubMaquina{
         tabelaTransicoes.add(new Transicao(6, 5, "vazio", "ignora"));
         tabelaTransicoes.add(new Transicao(6, 15, "endwhile", "ignora"));
         tabelaTransicoes.add(new Transicao(7, 8, "(", "ignora"));
-        //tabelaTransicoes.add(new Transicao(8, 9, "atribuicao", "ignora"));
-        //tabelaTransicoes.add(new Transicao(9, 10, "condicao", "ignora"));
-        //tabelaTransicoes.add(new Transicao(10, 11, "atribuicao", "ignora"));
+        tabelaTransicoes.add(new Transicao(8, 9, "identificador", "chamaAtribuicao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "int", "chamaDeclaracao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "float", "chamaDeclaracao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "string", "chamaDeclaracao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "boolean", "chamaDeclaracao"));
+        tabelaTransicoes.add(new Transicao(9, 10, "(", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(9, 10, "-", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(9, 10, "true", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(9, 10, "false", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(9, 10, "identificador", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(9, 10, "numero", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(9, 10, "not", "chamaCondicao"));
+        tabelaTransicoes.add(new Transicao(10, 11, "identificador", "chamaAtribuicao"));
         tabelaTransicoes.add(new Transicao(11, 12, ")", "ignora"));
         tabelaTransicoes.add(new Transicao(12, 13, "beginfor", "ignora"));
         tabelaTransicoes.add(new Transicao(13, 14, "int", "chamaDeclaracao"));
@@ -62,11 +78,6 @@ public class MaquinaIteracao extends SubMaquina{
         if(acao.equals("ignora"))
         {
 
-        }
-        else if(acao.equals("chamaFuncao"))
-        {
-            subMaquina = new MaquinaFuncao();
-            retorno = subMaquina.processaToken(token);
         }
         else if(acao.equals("chamaDeclaracao"))
         {
@@ -101,6 +112,11 @@ public class MaquinaIteracao extends SubMaquina{
         else if(acao.equals("chamaIdentificador"))
         {
             subMaquina = new MaquinaIdentificador();
+            retorno = subMaquina.processaToken(token);
+        }
+        else if(acao.equals("chamaCondicao"))
+        {
+            subMaquina = new MaquinaCondicao();
             retorno = subMaquina.processaToken(token);
         }
         else
