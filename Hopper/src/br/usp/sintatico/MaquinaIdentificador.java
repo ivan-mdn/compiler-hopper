@@ -15,12 +15,21 @@ public class MaquinaIdentificador extends SubMaquina{
         tabelaTransicoes.add(new Transicao(0, 1, "identificador", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "[", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 7, "vazio", "ignora"));
+        tabelaTransicoes.add(new Transicao(1, 8, "(", "ignora"));
         tabelaTransicoes.add(new Transicao(2, 3, "numero", "ignora"));
         tabelaTransicoes.add(new Transicao(3, 4, "]", "ignora"));
         tabelaTransicoes.add(new Transicao(4, 5, "[", "ignora"));
         tabelaTransicoes.add(new Transicao(4, 7, "vazio", "ignora"));
         tabelaTransicoes.add(new Transicao(5, 6, "numero", "ignora"));
         tabelaTransicoes.add(new Transicao(6, 7, "]", "ignora"));
+        tabelaTransicoes.add(new Transicao(8, 9, "(", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "-", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "true", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "false", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "identificador", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(8, 9, "numero", "chamaExpressao"));
+        tabelaTransicoes.add(new Transicao(9, 8, ",", "ignora"));
+        tabelaTransicoes.add(new Transicao(9, 7, ")", "ignora"));
 
         tabelaEstadosAceitacao.add(7);
 
