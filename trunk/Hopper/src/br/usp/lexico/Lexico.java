@@ -2,14 +2,6 @@ package br.usp.lexico;
 
 import br.usp.maquinaestados.MaquinaEstados;
 import br.usp.maquinaestados.Transicao;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -227,11 +219,11 @@ public class Lexico {
         Lexico.estadoInicial = estadoInicial;
     }
 
-    public static MaquinaEstados getMaquina() {
+    public static MaquinaEstados getMaquinaLexico() {
         return maquinaLexico;
     }
 
-    public static void setMaquina(MaquinaEstados maquina) {
+    public static void setMaquinaLexico(MaquinaEstados maquina) {
         Lexico.maquinaLexico = maquina;
     }
 
@@ -376,7 +368,7 @@ public class Lexico {
         tabelaTransicoes.add(new Transicao(3,  3,  "8", "empilha"));
         tabelaTransicoes.add(new Transicao(3,  3,  "9", "empilha"));
         tabelaTransicoes.add(new Transicao(3,  5,  ".", "empilha"));
-        tabelaTransicoes.add(new Transicao(3,  4,  "other", "desempilha"));
+        tabelaTransicoes.add(new Transicao(3,  4,  "other", "desempilhaNumero"));
         tabelaTransicoes.add(new Transicao(5,  6,  "0", "empilha"));
         tabelaTransicoes.add(new Transicao(5,  6,  "1", "empilha"));
         tabelaTransicoes.add(new Transicao(5,  6,  "2", "empilha"));
@@ -397,7 +389,7 @@ public class Lexico {
         tabelaTransicoes.add(new Transicao(6,  6,  "7", "empilha"));
         tabelaTransicoes.add(new Transicao(6,  6,  "8", "empilha"));
         tabelaTransicoes.add(new Transicao(6,  6,  "9", "empilha"));
-        tabelaTransicoes.add(new Transicao(6,  7,  "other", "desempilha"));
+        tabelaTransicoes.add(new Transicao(6,  7,  "other", "desempilhaNumero"));
         tabelaTransicoes.add(new Transicao(0,  10, "<", "empilha"));
         tabelaTransicoes.add(new Transicao(0,  14, "=", "empilha"));
         tabelaTransicoes.add(new Transicao(0,  15, ">", "empilha"));
@@ -417,127 +409,4 @@ public class Lexico {
         tabelaTransicoes.add(new Transicao(17, 19, "other", "desempilha"));
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        setAsciiTable();
-        setPalavrasReservadas();
-        setTabelaTransicoes();
-        setTabelaEstadosAceitacao();
-        compileArchive();
-    }
-
-    private static void compileArchive()
-    {
-        String archive = null;
-        try
-        {
-            System.out.print("Digite o nome do arquivo: ");
-            while(true)
-            {
-                BufferedReader buf = new BufferedReader(new InputStreamReader(System.in));
-                while (buf.ready())
-                {
-                    archive = buf.readLine();
-                    readAndWriteArchive(archive);
-                    System.exit(0);
-                }
-            }
-        }
-        catch (IOException e)
-        {
-            System.out.println("Não foi possível ler o arquivo!");
-        }
-    }
-
-    private static void readAndWriteArchive(String archive)
-    {
-        try
-        {
-            BufferedReader in = new BufferedReader(new FileReader(archive));
-            System.out.println("Lendo " + archive);
-            OutputStream os = new FileOutputStream("saida.txt");
-            OutputStreamWriter osw = new OutputStreamWriter(os);
-            BufferedWriter bw = new BufferedWriter(osw);
-            String pilha = "";
-            int other = -1;
-            int codigo = 0;
-            String tipo = "";
-
-            while (in.ready())
-            {
-                int letra;
-                if(other == -1)
-                {
-                    letra = in.read();
-                }
-                else
-                {
-                    letra = other;
-                    other = -1;
-                }
-                
-                System.out.println("Símbolo: " + asciiTable.get(letra));
-                String acao = maquinaLexico.transita((String) asciiTable.get(letra));
-                System.out.println("Ação a ser tomada: " + acao);
-                
-                if(acao.equals("empilha"))
-                {
-                    pilha = pilha.concat((String) asciiTable.get(letra));
-                }
-                else if(acao.equals("colocaTabelaSimbolos"))
-                {
-                    pilha = pilha.concat((String) asciiTable.get(letra));
-
-                    if(!tabelaSimbolos.containsKey(pilha))
-                    {
-                        if(!palavrasReservadas.containsValue(pilha))
-                        {
-                            tipo = "identificador";
-                            tabelaSimbolos.put(pilha, new Simbolo(codigo, pilha, tipo));
-                            codigo++;
-                        }
-                    }
-                    bw.write(pilha);
-                    bw.newLine();
-                    pilha = "";
-                }
-                else if(acao.equals("desempilha"))
-                {
-                    other = letra;
-                    if(!tabelaSimbolos.containsKey(pilha))
-                    {
-                        if(!palavrasReservadas.containsValue(pilha))
-                        {
-                            tipo = "identificador";
-                            tabelaSimbolos.put(pilha, new Simbolo(codigo, pilha, tipo));
-                            codigo++;
-                        }
-                    }
-                    bw.write(pilha);
-                    if(!pilha.equals(""))
-                    {
-                        bw.newLine();
-                    }
-                    pilha = "";
-                }
-                else if(acao.equals("ignora"))
-                {
-
-                }
-                else
-                {
-                    System.out.println("Não existe ação definida!");
-                }
-            }
-            in.close();
-            bw.close();
-            
-        }
-        catch (IOException e)
-        {
-            System.out.println("Não foi possível ler o arquivo!");
-        }
-    }
 }
