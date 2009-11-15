@@ -10,13 +10,13 @@ import java.util.Hashtable;
  * @author nathalia
  */
 public class Lexico {
-    private static Hashtable asciiTable = new Hashtable();
-    private static ArrayList<Transicao> tabelaTransicoes = new ArrayList<Transicao>();
-    private static Hashtable tabelaSimbolos = new Hashtable();
-    private static Hashtable palavrasReservadas = new Hashtable();
-    private static ArrayList tabelaEstadosAceitacao = new ArrayList();
-    private static int estadoInicial = 0;
-    private static MaquinaEstados maquinaLexico = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+    private Hashtable asciiTable = new Hashtable();
+    private ArrayList<Transicao> tabelaTransicoes = new ArrayList<Transicao>();
+    private Hashtable tabelaSimbolos = new Hashtable();
+    private Hashtable palavrasReservadas = new Hashtable();
+    private ArrayList tabelaEstadosAceitacao = new ArrayList();
+    private int estadoInicial = 0;
+    private MaquinaEstados maquinaLexico = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
 
     public Lexico() {
         setAsciiTable();
@@ -26,13 +26,15 @@ public class Lexico {
         maquinaLexico.setTabelaTransicoes(tabelaTransicoes);
         maquinaLexico.setTabelaEstadosAceitacao(tabelaEstadosAceitacao);
         maquinaLexico.setEstadoInicial(estadoInicial);
+        maquinaLexico.setNome("Lexico");
+        maquinaLexico.setReset(true);
     }
     
-    public static Hashtable getPalavrasReservadas() {
+    public Hashtable getPalavrasReservadas() {
         return palavrasReservadas;
     }
 
-    public static void setPalavrasReservadas() {
+    public void setPalavrasReservadas() {
         palavrasReservadas.put("program", "program");
         palavrasReservadas.put("end", "end");
         palavrasReservadas.put("int", "int");
@@ -59,6 +61,8 @@ public class Lexico {
         palavrasReservadas.put("true", "true");
         palavrasReservadas.put("false", "false");
         palavrasReservadas.put("function", "function");
+        palavrasReservadas.put("beginfunction", "beginfunction");
+        palavrasReservadas.put("endfunction", "endfunction");
         palavrasReservadas.put("+", "+");
         palavrasReservadas.put("-", "-");
         palavrasReservadas.put("*", "*");
@@ -71,6 +75,8 @@ public class Lexico {
         palavrasReservadas.put(")", ")");
         palavrasReservadas.put("{", "{");
         palavrasReservadas.put("}", "}");
+        palavrasReservadas.put("[", "[");
+        palavrasReservadas.put("]", "]");
         palavrasReservadas.put("<>", "<>");
         palavrasReservadas.put(">", ">");
         palavrasReservadas.put("<", "<");
@@ -80,19 +86,19 @@ public class Lexico {
 
     }
 
-    public static Hashtable getTabelaSimbolos() {
+    public Hashtable getTabelaSimbolos() {
         return tabelaSimbolos;
     }
 
-    public static void setTabelaSimbolos(Hashtable tabelaSimbolos) {
-        Lexico.tabelaSimbolos = tabelaSimbolos;
+    public void setTabelaSimbolos(Hashtable tabelaSimbolos) {
+        this.tabelaSimbolos = tabelaSimbolos;
     }
 
-    public static Hashtable getAsciiTable() {
+    public Hashtable getAsciiTable() {
         return asciiTable;
     }
 
-    public static void setAsciiTable() {
+    public void setAsciiTable() {
         asciiTable.put(9,  "HT");
         asciiTable.put(10, "LF");
         asciiTable.put(32, "SPACE");
@@ -193,11 +199,11 @@ public class Lexico {
         asciiTable.put(127, "DEL");
     }
 
-    public static ArrayList getTabelaEstadosAceitacao() {
+    public ArrayList getTabelaEstadosAceitacao() {
         return tabelaEstadosAceitacao;
     }
 
-    public static void setTabelaEstadosAceitacao() {
+    public void setTabelaEstadosAceitacao() {
         tabelaEstadosAceitacao.add(2);
         tabelaEstadosAceitacao.add(4);
         tabelaEstadosAceitacao.add(7);
@@ -209,29 +215,30 @@ public class Lexico {
         tabelaEstadosAceitacao.add(16);
         tabelaEstadosAceitacao.add(18);
         tabelaEstadosAceitacao.add(19);
+        tabelaEstadosAceitacao.add(20);
     }
 
-    public static int getEstadoInicial() {
+    public int getEstadoInicial() {
         return estadoInicial;
     }
 
-    public static void setEstadoInicial(int estadoInicial) {
-        Lexico.estadoInicial = estadoInicial;
+    public void setEstadoInicial(int estadoInicial) {
+        this.estadoInicial = estadoInicial;
     }
 
-    public static MaquinaEstados getMaquinaLexico() {
+    public MaquinaEstados getMaquinaLexico() {
         return maquinaLexico;
     }
 
-    public static void setMaquinaLexico(MaquinaEstados maquina) {
-        Lexico.maquinaLexico = maquina;
+    public void setMaquinaLexico(MaquinaEstados maquina) {
+        this.maquinaLexico = maquina;
     }
 
-    public static ArrayList<Transicao> getTabelaTransicoes() {
+    public ArrayList<Transicao> getTabelaTransicoes() {
         return tabelaTransicoes;
     }
 
-    public static void setTabelaTransicoes() {
+    public void setTabelaTransicoes() {
         
         tabelaTransicoes.add(new Transicao(0,  1,  "A", "empilha"));
         tabelaTransicoes.add(new Transicao(0,  1,  "B", "empilha"));
@@ -295,6 +302,19 @@ public class Lexico {
         tabelaTransicoes.add(new Transicao(0,  3,  "7", "empilha"));
         tabelaTransicoes.add(new Transicao(0,  3,  "8", "empilha"));
         tabelaTransicoes.add(new Transicao(0,  3,  "9", "empilha"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "+", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "-", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "*", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "/", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "%", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  ";", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  ",", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "(", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  ")", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "{", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "}", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "[", "colocaTabelaSimbolos"));
+        tabelaTransicoes.add(new Transicao(0,  20,  "]", "colocaTabelaSimbolos"));
         tabelaTransicoes.add(new Transicao(1,  1,  "A", "empilha"));
         tabelaTransicoes.add(new Transicao(1,  1,  "B", "empilha"));
         tabelaTransicoes.add(new Transicao(1,  1,  "C", "empilha"));

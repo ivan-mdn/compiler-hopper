@@ -13,6 +13,24 @@ public class MaquinaEstados {
     private ArrayList tabelaEstadosAceitacao = new ArrayList();
     private int estadoAtual;
     private int estadoInicial;
+    private String nome;
+    private boolean reset = false;
+
+    public boolean isReset() {
+        return reset;
+    }
+
+    public void setReset(boolean reset) {
+        this.reset = reset;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     public int getEstadoInicial() {
         return estadoInicial;
@@ -64,10 +82,9 @@ public class MaquinaEstados {
             if(transicao.getEstadoAtual() == estadoAtual)
                 if(transicao.getSimbolo().equals(valorLido) || transicao.getSimbolo().equals("other"))
                 {
-                    System.out.println("Estado Atual: " + estadoAtual);
                     int proximoEstado = transicao.getProximoEstado();
-                    System.out.println("Próximo Estado: " + proximoEstado);
-                    if(tabelaEstadosAceitacao.contains(proximoEstado))
+                    System.out.println(nome + ": Transição: " + estadoAtual + "->" + proximoEstado);
+                    if(tabelaEstadosAceitacao.contains(proximoEstado) && reset == true)
                     {
                         setEstadoAtual(estadoInicial);
                     }
@@ -76,7 +93,7 @@ public class MaquinaEstados {
                         setEstadoAtual(proximoEstado);
                     }
                     acao = transicao.getAcao();
-                    System.out.println("Mudou para o Estado " + estadoAtual);
+                    System.out.println(nome + ": Mudou para o Estado: " + estadoAtual);
                     achou = true;
                 }
         }

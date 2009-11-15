@@ -21,16 +21,18 @@ public class MaquinaExpressao extends SubMaquina{
         tabelaTransicoes.add(new Transicao(0, 1, "numero", "chamaTermo"));
         tabelaTransicoes.add(new Transicao(1, 2, "+", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "-", "ignora"));
-        tabelaTransicoes.add(new Transicao(3, 2, "(", "chamaTermo"));
-        tabelaTransicoes.add(new Transicao(3, 2, "-", "chamaTermo"));
-        tabelaTransicoes.add(new Transicao(3, 2, "true", "chamaTermo"));
-        tabelaTransicoes.add(new Transicao(3, 2, "false", "chamaTermo"));
-        tabelaTransicoes.add(new Transicao(3, 2, "identificador", "chamaTermo"));
-        tabelaTransicoes.add(new Transicao(3, 2, "numero", "chamaTermo"));
+        tabelaTransicoes.add(new Transicao(1, 3, "other", "devolve"));
+        tabelaTransicoes.add(new Transicao(2, 1, "(", "chamaTermo"));
+        tabelaTransicoes.add(new Transicao(2, 1, "-", "chamaTermo"));
+        tabelaTransicoes.add(new Transicao(2, 1, "true", "chamaTermo"));
+        tabelaTransicoes.add(new Transicao(2, 1, "false", "chamaTermo"));
+        tabelaTransicoes.add(new Transicao(2, 1, "identificador", "chamaTermo"));
+        tabelaTransicoes.add(new Transicao(2, 1, "numero", "chamaTermo"));
 
-        tabelaEstadosAceitacao.add(1);
+        tabelaEstadosAceitacao.add(3);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+        maquina.setNome("Sintático-Expressao");
     }
 
     public boolean trataToken(Simbolo token) {
@@ -39,7 +41,11 @@ public class MaquinaExpressao extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-
+            return true;
+        }
+        else if(acao.equals("devolve"))
+        {
+            return false;
         }
         else if(acao.equals("chamaTermo"))
         {
@@ -48,7 +54,7 @@ public class MaquinaExpressao extends SubMaquina{
         }
         else
         {
-            System.out.println("Não existe ação definida!");
+            System.out.println("Expressao: Não existe ação definida!");
         }
 
         return retorno;

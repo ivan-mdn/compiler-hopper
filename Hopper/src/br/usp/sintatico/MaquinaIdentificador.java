@@ -14,12 +14,12 @@ public class MaquinaIdentificador extends SubMaquina{
         estadoInicial = 0;
         tabelaTransicoes.add(new Transicao(0, 1, "identificador", "ignora"));
         tabelaTransicoes.add(new Transicao(1, 2, "[", "ignora"));
-        tabelaTransicoes.add(new Transicao(1, 7, "vazio", "ignora"));
+        tabelaTransicoes.add(new Transicao(1, 7, "other", "devolve"));
         tabelaTransicoes.add(new Transicao(1, 8, "(", "ignora"));
         tabelaTransicoes.add(new Transicao(2, 3, "numero", "ignora"));
         tabelaTransicoes.add(new Transicao(3, 4, "]", "ignora"));
         tabelaTransicoes.add(new Transicao(4, 5, "[", "ignora"));
-        tabelaTransicoes.add(new Transicao(4, 7, "vazio", "ignora"));
+        tabelaTransicoes.add(new Transicao(4, 7, "other", "devolve"));
         tabelaTransicoes.add(new Transicao(5, 6, "numero", "ignora"));
         tabelaTransicoes.add(new Transicao(6, 7, "]", "ignora"));
         tabelaTransicoes.add(new Transicao(8, 9, "(", "chamaExpressao"));
@@ -34,6 +34,7 @@ public class MaquinaIdentificador extends SubMaquina{
         tabelaEstadosAceitacao.add(7);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+        maquina.setNome("Sintático-Identificador");
     }
 
     public boolean trataToken(Simbolo token)
@@ -43,11 +44,15 @@ public class MaquinaIdentificador extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-
+            return true;
+        }
+        else if(acao.equals("devolve"))
+        {
+            return false;
         }
         else
         {
-            System.out.println("Não existe ação definida!");
+            System.out.println("Identificador: Não existe ação definida!");
         }
 
         return retorno;

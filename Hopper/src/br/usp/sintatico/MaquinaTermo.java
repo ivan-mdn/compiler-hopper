@@ -18,18 +18,21 @@ public class MaquinaTermo extends SubMaquina{
         tabelaTransicoes.add(new Transicao(0, 1, "false", "chamaFator"));
         tabelaTransicoes.add(new Transicao(0, 1, "identificador", "chamaFator"));
         tabelaTransicoes.add(new Transicao(0, 1, "numero", "chamaFator"));
-        tabelaTransicoes.add(new Transicao(1, 2, "+", "ignora"));
-        tabelaTransicoes.add(new Transicao(1, 2, "-", "ignora"));
-        tabelaTransicoes.add(new Transicao(3, 2, "(", "chamaFator"));
-        tabelaTransicoes.add(new Transicao(3, 2, "-", "chamaFator"));
-        tabelaTransicoes.add(new Transicao(3, 2, "true", "chamaFator"));
-        tabelaTransicoes.add(new Transicao(3, 2, "false", "chamaFator"));
-        tabelaTransicoes.add(new Transicao(3, 2, "identificador", "chamaFator"));
-        tabelaTransicoes.add(new Transicao(3, 2, "numero", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(1, 2, "*", "ignora"));
+        tabelaTransicoes.add(new Transicao(1, 2, "/", "ignora"));
+        tabelaTransicoes.add(new Transicao(1, 2, "%", "ignora"));
+        tabelaTransicoes.add(new Transicao(1, 3, "other", "devolve"));
+        tabelaTransicoes.add(new Transicao(2, 1, "(", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(2, 1, "-", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(2, 1, "true", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(2, 1, "false", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(2, 1, "identificador", "chamaFator"));
+        tabelaTransicoes.add(new Transicao(2, 1, "numero", "chamaFator"));
 
-        tabelaEstadosAceitacao.add(1);
+        tabelaEstadosAceitacao.add(3);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+        maquina.setNome("Sintático-Termo");
     }
 
     public boolean trataToken(Simbolo token) {
@@ -38,7 +41,11 @@ public class MaquinaTermo extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-
+            return true;
+        }
+        else if(acao.equals("devolve"))
+        {
+            return false;
         }
         else if(acao.equals("chamaFator"))
         {
@@ -47,7 +54,7 @@ public class MaquinaTermo extends SubMaquina{
         }
         else
         {
-            System.out.println("Não existe ação definida!");
+            System.out.println("Termo: Não existe ação definida!");
         }
 
         return retorno;

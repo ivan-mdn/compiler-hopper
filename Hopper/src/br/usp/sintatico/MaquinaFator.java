@@ -36,6 +36,7 @@ public class MaquinaFator extends SubMaquina{
         tabelaEstadosAceitacao.add(4);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+        maquina.setNome("Sintático-Fator");
     }
 
     public boolean trataToken(Simbolo token) {
@@ -44,7 +45,7 @@ public class MaquinaFator extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-
+            return true;
         }
         else if(acao.equals("chamaIdentificador"))
         {
@@ -58,7 +59,7 @@ public class MaquinaFator extends SubMaquina{
         }
         else
         {
-            System.out.println("Não existe ação definida!");
+            System.out.println("Fator: Não existe ação definida!");
         }
 
         return retorno;

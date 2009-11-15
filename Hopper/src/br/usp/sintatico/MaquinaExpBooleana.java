@@ -48,6 +48,7 @@ public class MaquinaExpBooleana extends SubMaquina{
         tabelaEstadosAceitacao.add(5);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+        maquina.setNome("Sintático-ExpBooleana");
     }
 
     public boolean trataToken(Simbolo token) {
@@ -56,7 +57,7 @@ public class MaquinaExpBooleana extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-
+            return true;
         }
         else if(acao.equals("chamaCondicao"))
         {
@@ -65,7 +66,7 @@ public class MaquinaExpBooleana extends SubMaquina{
         }
         else
         {
-            System.out.println("Não existe ação definida!");
+            System.out.println("ExpBooleana: Não existe ação definida!");
         }
 
         return retorno;
