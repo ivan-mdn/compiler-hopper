@@ -18,15 +18,16 @@ import java.io.OutputStreamWriter;
  */
 public class Main {
 
+    private static Lexico lexico = new Lexico();
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Lexico.setAsciiTable();
-        Lexico.setPalavrasReservadas();
-        Lexico.setTabelaTransicoes();
-        Lexico.setTabelaEstadosAceitacao();
+        lexico.setAsciiTable();
+        lexico.setPalavrasReservadas();
+        lexico.setTabelaTransicoes();
+        lexico.setTabelaEstadosAceitacao();
         compileArchive();
     }
 
@@ -81,45 +82,46 @@ public class Main {
                     other = -1;
                 }
                 
-                //System.out.println("Símbolo: " + Lexico.getAsciiTable().get(letra));
-                String acao = Lexico.getMaquinaLexico().transita((String) Lexico.getAsciiTable().get(letra));
+                System.out.println("Símbolo: " + lexico.getAsciiTable().get(letra));
+                String acao = lexico.getMaquinaLexico().transita((String) lexico.getAsciiTable().get(letra));
                 //System.out.println("Ação a ser tomada: " + acao);
                 
                 if(acao.equals("empilha"))
                 {
-                    pilha = pilha.concat((String) Lexico.getAsciiTable().get(letra));
+                    pilha = pilha.concat((String) lexico.getAsciiTable().get(letra));
                 }
                 else if(acao.equals("colocaTabelaSimbolos"))
                 {
-                    pilha = pilha.concat((String) Lexico.getAsciiTable().get(letra));
+                    pilha = pilha.concat((String) lexico.getAsciiTable().get(letra));
                     Simbolo simbolo = new Simbolo(-1, null, null);
                     Boolean result = false;
-                    if(!Lexico.getTabelaSimbolos().containsKey(pilha))
+                    if(!lexico.getPalavrasReservadas().containsValue(pilha))
                     {
-                        if(!Lexico.getPalavrasReservadas().containsValue(pilha))
+                        tipo = "identificador";
+                        simbolo.setCodigo(codigo);
+                        simbolo.setNome(pilha);
+                        simbolo.setTipo(tipo);
+                        if(!lexico.getTabelaSimbolos().containsKey(pilha))
                         {
-                            tipo = "identificador";
-                            simbolo.setCodigo(codigo);
-                            simbolo.setNome(pilha);
-                            simbolo.setTipo(tipo);
-                            Lexico.getTabelaSimbolos().put(pilha, simbolo);
-                            codigo++;
+                            lexico.getTabelaSimbolos().put(pilha, simbolo);
                         }
-                    }
-                    if(simbolo.getCodigo() != -1)
-                    {
-                        sintatico.processaToken(simbolo);
-                    }
-                    if(result)
-                    {
-                        bw.write("true");
+                        codigo++;
                     }
                     else
                     {
-                        bw.write("false");
+                        simbolo.setCodigo(codigo);
+                        simbolo.setNome(pilha);
+                        simbolo.setTipo(pilha);
+                        codigo++;
+                    }
+                
+                    if(simbolo.getCodigo() != -1)
+                    {
+                        System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
+                        result = sintatico.processaToken(simbolo);
                     }
 
-                    //bw.write(pilha);
+                    bw.write(pilha);
                     bw.newLine();
                     pilha = "";
                 }
@@ -128,68 +130,74 @@ public class Main {
                     other = letra;
                     Simbolo simbolo = new Simbolo(-1, null, null);
                     Boolean result = false;
-                    if(!Lexico.getTabelaSimbolos().containsKey(pilha))
+                    if(pilha.length() > 0)
                     {
-                        if(!Lexico.getPalavrasReservadas().containsValue(pilha))
+                        if(!lexico.getPalavrasReservadas().containsValue(pilha))
                         {
                             tipo = "identificador";
                             simbolo.setCodigo(codigo);
                             simbolo.setNome(pilha);
                             simbolo.setTipo(tipo);
-                            Lexico.getTabelaSimbolos().put(pilha, simbolo);
+                            if(!lexico.getTabelaSimbolos().containsKey(pilha))
+                            {
+                                lexico.getTabelaSimbolos().put(pilha, simbolo);
+                            }
                             codigo++;
                         }
-                    }
-                    if(simbolo.getCodigo() != -1)
-                    {
-                        result = sintatico.processaToken(simbolo);
-                    }
-                    if(result)
-                    {
-                        bw.write("true");
-                    }
-                    else
-                    {
-                        bw.write("false");
-                    }
+                        else
+                        {
+                            simbolo.setCodigo(codigo);
+                            simbolo.setNome(pilha);
+                            simbolo.setTipo(pilha);
+                            codigo++;
+                        }
 
-                    if(!pilha.equals(""))
-                    {
-                        bw.newLine();
+                        if(simbolo.getCodigo() != -1)
+                        {
+                            System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
+                            result = sintatico.processaToken(simbolo);
+                        }
+
+                        bw.write(pilha);
+                        if(!pilha.equals(""))
+                        {
+                            bw.newLine();
+                        }
+                        pilha = "";
                     }
-                    pilha = "";
                 }
                 else if(acao.equals("desempilhaNumero"))
                 {
                     other = letra;
                     Simbolo simbolo = new Simbolo(-1, null, null);
                     Boolean result = false;
-                    if(!Lexico.getTabelaSimbolos().containsKey(pilha))
+                    if(!lexico.getPalavrasReservadas().containsValue(pilha))
                     {
-                        if(!Lexico.getPalavrasReservadas().containsValue(pilha))
+                        tipo = "numero";
+                        simbolo.setCodigo(codigo);
+                        simbolo.setNome(pilha);
+                        simbolo.setTipo(tipo);
+                        if(!lexico.getTabelaSimbolos().containsKey(pilha))
                         {
-                            tipo = "numero";
-                            simbolo.setCodigo(codigo);
-                            simbolo.setNome(pilha);
-                            simbolo.setTipo(tipo);
-                            Lexico.getTabelaSimbolos().put(pilha, simbolo);
-                            codigo++;
+                            lexico.getTabelaSimbolos().put(pilha, simbolo);
                         }
-                    }
-                    //bw.write(pilha);
-                    if(simbolo.getCodigo() != -1)
-                    {
-                        result = sintatico.processaToken(simbolo);
-                    }
-                    if(result)
-                    {
-                        bw.write("true");
+                        codigo++;
                     }
                     else
                     {
-                        bw.write("false");
+                        simbolo.setCodigo(codigo);
+                        simbolo.setNome(pilha);
+                        simbolo.setTipo(pilha);
+                        codigo++;
+                    }
+                    
+                    if(simbolo.getCodigo() != -1)
+                    {
+                        System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
+                        result = sintatico.processaToken(simbolo);
                     }
 
+                    bw.write(pilha);
                     if(!pilha.equals(""))
                     {
                         bw.newLine();

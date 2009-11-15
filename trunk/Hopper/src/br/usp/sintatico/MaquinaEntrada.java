@@ -18,6 +18,7 @@ public class MaquinaEntrada extends SubMaquina{
         tabelaEstadosAceitacao.add(2);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+        maquina.setNome("Sintático-Entrada");
     }
 
     public boolean trataToken(Simbolo token)
@@ -27,7 +28,7 @@ public class MaquinaEntrada extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-
+            return true;
         }
         else if(acao.equals("chamaIdentificador"))
         {
@@ -36,7 +37,7 @@ public class MaquinaEntrada extends SubMaquina{
         }
         else
         {
-            System.out.println("Não existe ação definida!");
+            System.out.println("Entrada: Não existe ação definida!");
         }
 
         return retorno;

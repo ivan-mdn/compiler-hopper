@@ -13,24 +13,24 @@ public class MaquinaPrograma extends SubMaquina{
     public MaquinaPrograma() {
         estadoInicial = 0;
         tabelaTransicoes.add(new Transicao(0, 1, "program", "ignora"));
-        tabelaTransicoes.add(new Transicao(1, 2, "function", "chamaFuncao"));
+        tabelaTransicoes.add(new Transicao(1, 1, "function", "chamaFuncao"));
+        tabelaTransicoes.add(new Transicao(1, 1, "if", "chamaCondicional"));
+        tabelaTransicoes.add(new Transicao(1, 1, "while", "chamaIteracao"));
+        tabelaTransicoes.add(new Transicao(1, 1, "for", "chamaIteracao"));
         tabelaTransicoes.add(new Transicao(1, 3, "int", "chamaDeclaracao"));
         tabelaTransicoes.add(new Transicao(1, 3, "float", "chamaDeclaracao"));
         tabelaTransicoes.add(new Transicao(1, 3, "string", "chamaDeclaracao"));
         tabelaTransicoes.add(new Transicao(1, 3, "boolean", "chamaDeclaracao"));
         tabelaTransicoes.add(new Transicao(1, 3, "input", "chamaEntrada"));
         tabelaTransicoes.add(new Transicao(1, 3, "output", "chamaSaida"));
-        tabelaTransicoes.add(new Transicao(1, 3, "if", "chamaCondicional"));
-        tabelaTransicoes.add(new Transicao(1, 3, "while", "chamaIteracao"));
-        tabelaTransicoes.add(new Transicao(1, 3, "for", "chamaIteracao"));
         tabelaTransicoes.add(new Transicao(1, 3, "identificador", "chamaAtribuicao"));
         tabelaTransicoes.add(new Transicao(1, 4, "end", "ignora"));
-        tabelaTransicoes.add(new Transicao(2, 1, "vazio", "ignora"));
-        tabelaTransicoes.add(new Transicao(3, 1, "vazio", "ignora"));
+        tabelaTransicoes.add(new Transicao(3, 1, ";", "ignora"));
 
         tabelaEstadosAceitacao.add(4);
 
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
+        maquina.setNome("Sintático-Programa");
     }
 
     public boolean trataToken(Simbolo token)
@@ -40,7 +40,7 @@ public class MaquinaPrograma extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-
+            return true;
         }
         else if(acao.equals("chamaFuncao"))
         {
@@ -79,7 +79,7 @@ public class MaquinaPrograma extends SubMaquina{
         }
         else
         {
-            System.out.println("Não existe ação definida!");
+            System.out.println("Programa: Não existe ação definida!");
         }
 
         return retorno;

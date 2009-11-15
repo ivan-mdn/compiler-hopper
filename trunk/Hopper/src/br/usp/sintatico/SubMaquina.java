@@ -26,13 +26,25 @@ public abstract class SubMaquina {
         if(subMaquina != null)
         {
             retorno = subMaquina.processaToken(token);
-
-            if(!retorno)
+            System.out.println(subMaquina.maquina.getNome() + ": " + retorno + "/" + subMaquina.maquina.isEstadoAceitacao());
+            
+            if(retorno)
             {
-                if(subMaquina.maquina.isEstadoAceitacao())
+                if(subMaquina.isEstadoAceitacao())
+                {
+                    System.out.println(maquina.getNome() + ": Fechou " + subMaquina.maquina.getNome());
+                    subMaquina = null;
+                }
+            }
+            else
+            {
+                if(subMaquina.isEstadoAceitacao())
                 {
                     subMaquina = null;
-                    retorno = true;
+                    if(!maquina.isEstadoAceitacao())
+                    {
+                        retorno = trataToken(token);
+                    }
                 }
                 else
                 {
@@ -43,6 +55,22 @@ public abstract class SubMaquina {
         else
         {
             retorno = trataToken(token);
+        }
+
+        return retorno;
+    }
+
+    public boolean isEstadoAceitacao()
+    {
+        boolean retorno = false;
+
+        if(subMaquina != null)
+        {
+            retorno = subMaquina.isEstadoAceitacao();
+        }
+        else
+        {
+            retorno = maquina.isEstadoAceitacao();
         }
 
         return retorno;
