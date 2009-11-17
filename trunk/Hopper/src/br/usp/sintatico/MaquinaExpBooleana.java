@@ -42,7 +42,6 @@ public class MaquinaExpBooleana extends SubMaquina{
         tabelaTransicoes.add(new Transicao(3, 4, "identificador", "chamaCondicao"));
         tabelaTransicoes.add(new Transicao(3, 4, "numero", "chamaCondicao"));
         tabelaTransicoes.add(new Transicao(3, 4, "not", "chamaCondicao"));
-        tabelaTransicoes.add(new Transicao(1, 2, ">=", "ignora"));
         tabelaTransicoes.add(new Transicao(4, 5, ")", "ignora"));
 
         tabelaEstadosAceitacao.add(5);
