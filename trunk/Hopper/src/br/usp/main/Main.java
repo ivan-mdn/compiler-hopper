@@ -61,7 +61,7 @@ public class Main {
         {
             BufferedReader in = new BufferedReader(new FileReader(archive));
             System.out.println("Lendo " + archive);
-            OutputStream os = new FileOutputStream("saida.txt");
+            OutputStream os = new FileOutputStream("saida_" + archive + ".txt");
             OutputStreamWriter osw = new OutputStreamWriter(os);
             BufferedWriter bw = new BufferedWriter(osw);
             String pilha = "";
