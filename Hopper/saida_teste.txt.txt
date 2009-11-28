@@ -57,6 +57,7 @@ i
 ;
 endwhile
 function
+boolean
 par
 (
 int
@@ -86,6 +87,7 @@ false
 ;
 endif
 return
+retorno
 ;
 endfunction
 end
