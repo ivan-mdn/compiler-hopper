@@ -1,8 +1,10 @@
 package br.usp.sintatico;
 
+import br.usp.estrutura.Pilha;
 import br.usp.lexico.Simbolo;
 import br.usp.maquinaestados.MaquinaEstados;
 import br.usp.maquinaestados.Transicao;
+import br.usp.semantico.Semantico;
 
 /**
  *
@@ -37,14 +39,34 @@ public class MaquinaIdentificador extends SubMaquina{
         maquina.setNome("Sintático-Identificador");
     }
 
-    public boolean trataToken(Simbolo token)
-    {
-        boolean retorno = false;
+//    public boolean trataToken(Simbolo token)
+//    {
+//        boolean retorno = false;
+//
+//        String acao = maquina.transita(token.getTipo());
+//        if(acao.equals("ignora"))
+//        {
+//			return true;
+//        }
+//        else if(acao.equals("devolve"))
+//        {
+//            return false;
+//        }
+//        else
+//        {
+//            System.out.println("Identificador: Não existe ação definida!");
+//        }
+//
+//        return retorno;
+//    }
+
+	public boolean trataToken(Simbolo token, Semantico semantico) {
+		        boolean retorno = false;
 
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-            return true;
+			return true;
         }
         else if(acao.equals("devolve"))
         {
@@ -52,9 +74,9 @@ public class MaquinaIdentificador extends SubMaquina{
         }
         else
         {
-            System.out.println("Identificador: Não existe ação definida!");
+            System.out.println("Identificador: Nao existe acao definida!");
         }
 
         return retorno;
-    }
+	}
 }

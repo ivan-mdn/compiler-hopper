@@ -1,8 +1,10 @@
 package br.usp.sintatico;
 
+import br.usp.estrutura.Pilha;
 import br.usp.lexico.Simbolo;
 import br.usp.maquinaestados.MaquinaEstados;
 import br.usp.maquinaestados.Transicao;
+import br.usp.semantico.Semantico;
 
 /**
  *
@@ -23,26 +25,48 @@ public class MaquinaDeclaracao extends SubMaquina{
         maquina = new MaquinaEstados(tabelaTransicoes, estadoInicial, tabelaEstadosAceitacao);
         maquina.setNome("Sintático-Declaracao");
     }
-    
-    public boolean trataToken(Simbolo token)
-    {
+
+//    public boolean trataToken(Simbolo token)
+//    {
+//        boolean retorno = false;
+//
+//        String acao = maquina.transita(token.getTipo());
+//        if(acao.equals("ignora"))
+//        {
+//            return true;
+//        }
+//        else if(acao.equals("chamaIdentificador"))
+//        {
+//			subMaquina = new MaquinaIdentificador();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else
+//        {
+//            System.out.println("Declaração: Não existe ação definida!");
+//        }
+//
+//        return retorno;
+//    }
+
+	public boolean trataToken(Simbolo token, Semantico semantico) {
         boolean retorno = false;
 
         String acao = maquina.transita(token.getTipo());
-        if(acao.equals("ignora"))
-        {
+        if(acao.equals("ignora")) {
             return true;
         }
-        else if(acao.equals("chamaIdentificador"))
-        {
-            subMaquina = new MaquinaIdentificador();
-            retorno = subMaquina.processaToken(token);
+        else if(acao.equals("chamaIdentificador")) {
+			// executa ação semântica
+			if (!semantico.Declaracao(token))
+				System.out.println("Deu pau no semantico!");
+
+			subMaquina = new MaquinaIdentificador();
+            retorno = subMaquina.processaToken(token, semantico);
         }
-        else
-        {
+        else {
             System.out.println("Declaração: Não existe ação definida!");
         }
 
         return retorno;
-    }
+	}
 }

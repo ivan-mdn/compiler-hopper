@@ -3,6 +3,7 @@ package br.usp.sintatico;
 import br.usp.lexico.Simbolo;
 import br.usp.maquinaestados.MaquinaEstados;
 import br.usp.maquinaestados.Transicao;
+import br.usp.semantico.Semantico;
 
 /**
  *
@@ -33,49 +34,109 @@ public class MaquinaPrograma extends SubMaquina{
         maquina.setNome("Sintático-Programa");
     }
 
-    public boolean trataToken(Simbolo token)
-    {
+//    public boolean trataToken(Simbolo token)
+//    {
+//        boolean retorno = false;
+//
+//        String acao = maquina.transita(token.getTipo());
+//        if(acao.equals("ignora"))
+//        {
+//            return true;
+//        }
+//        else if(acao.equals("chamaFuncao"))
+//        {
+//            subMaquina = new MaquinaFuncao();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else if(acao.equals("chamaDeclaracao"))
+//        {
+//            subMaquina = new MaquinaDeclaracao();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else if(acao.equals("chamaEntrada"))
+//        {
+//            subMaquina = new MaquinaEntrada();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else if(acao.equals("chamaSaida"))
+//        {
+//            subMaquina = new MaquinaSaida();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else if(acao.equals("chamaCondicional"))
+//        {
+//            subMaquina = new MaquinaCondicional();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else if(acao.equals("chamaIteracao"))
+//        {
+//            subMaquina = new MaquinaIteracao();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else if(acao.equals("chamaAtribuicao"))
+//        {
+//            subMaquina = new MaquinaAtribuicao();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else
+//        {
+//            System.out.println("Programa: Não existe ação definida!");
+//        }
+//
+//        return retorno;
+//    }
+
+	    public boolean trataToken(Simbolo token, Semantico semantico) {
         boolean retorno = false;
 
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
+			// executo a ação semântica de incialização do processamento
+			if(token.getNome().equals("program")) {
+				semantico.Inicializar();
+			}
+
+			// executo a ação semântica de finalização do processamento
+			if(token.getNome().equals("end")) {
+				semantico.Encerrar();
+			}
             return true;
         }
         else if(acao.equals("chamaFuncao"))
         {
             subMaquina = new MaquinaFuncao();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else if(acao.equals("chamaDeclaracao"))
         {
             subMaquina = new MaquinaDeclaracao();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else if(acao.equals("chamaEntrada"))
         {
             subMaquina = new MaquinaEntrada();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else if(acao.equals("chamaSaida"))
         {
             subMaquina = new MaquinaSaida();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else if(acao.equals("chamaCondicional"))
         {
             subMaquina = new MaquinaCondicional();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else if(acao.equals("chamaIteracao"))
         {
             subMaquina = new MaquinaIteracao();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else if(acao.equals("chamaAtribuicao"))
         {
             subMaquina = new MaquinaAtribuicao();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else
         {
@@ -84,6 +145,4 @@ public class MaquinaPrograma extends SubMaquina{
 
         return retorno;
     }
-
-
 }

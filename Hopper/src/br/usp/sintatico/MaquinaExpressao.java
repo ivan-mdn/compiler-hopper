@@ -3,6 +3,7 @@ package br.usp.sintatico;
 import br.usp.lexico.Simbolo;
 import br.usp.maquinaestados.MaquinaEstados;
 import br.usp.maquinaestados.Transicao;
+import br.usp.semantico.Semantico;
 
 /**
  *
@@ -35,8 +36,33 @@ public class MaquinaExpressao extends SubMaquina{
         maquina.setNome("Sintático-Expressao");
     }
 
-    public boolean trataToken(Simbolo token) {
-        boolean retorno = false;
+//    public boolean trataToken(Simbolo token) {
+//        boolean retorno = false;
+//
+//        String acao = maquina.transita(token.getTipo());
+//        if(acao.equals("ignora"))
+//        {
+//            return true;
+//        }
+//        else if(acao.equals("devolve"))
+//        {
+//            return false;
+//        }
+//        else if(acao.equals("chamaTermo"))
+//        {
+//            subMaquina = new MaquinaTermo();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else
+//        {
+//            System.out.println("Expressao: Não existe ação definida!");
+//        }
+//
+//        return retorno;
+//    }
+
+	public boolean trataToken(Simbolo token, Semantico semantico) {
+		boolean retorno = false;
 
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
@@ -50,7 +76,7 @@ public class MaquinaExpressao extends SubMaquina{
         else if(acao.equals("chamaTermo"))
         {
             subMaquina = new MaquinaTermo();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else
         {
@@ -58,6 +84,6 @@ public class MaquinaExpressao extends SubMaquina{
         }
 
         return retorno;
-    }
+	}
 
 }
