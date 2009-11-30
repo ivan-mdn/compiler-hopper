@@ -18,10 +18,9 @@ public class MVN {
         return "2";
     }
 
-	// Instrução Desconsiderada
-//    public static String constanteParaAcumulador() {
-//        return "3";
-//    }
+    public static String constanteParaAcumulador() {
+        return "3";
+    }
     
     public static String soma() {
         return "4";

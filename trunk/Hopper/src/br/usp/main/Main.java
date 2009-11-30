@@ -5,25 +5,24 @@ import br.usp.lexico.Simbolo;
 import br.usp.sintatico.Sintatico;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+//import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+//import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  *
- * @author nathalia
+ * @author nathalia, Bruno Grisi
  */
 public class Main {
+	private static Lexico lexico = new Lexico();
 
-    private static Lexico lexico = new Lexico();
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+	public static void main(String[] args) {
         lexico.setAsciiTable();
         lexico.setPalavrasReservadas();
         lexico.setTabelaTransicoes();
@@ -31,8 +30,7 @@ public class Main {
         compileArchive();
     }
 
-    private static void compileArchive()
-    {
+    private static void compileArchive() {
         String archive = null;
         try
         {
@@ -54,16 +52,18 @@ public class Main {
         }
     }
 
-    private static void readAndWriteArchive(String archive)
-    {
-        Sintatico sintatico = new Sintatico();
+	// executa o Sintático
+	private static void readAndWriteArchive(String archive) {
+        Sintatico sintatico = new Sintatico(lexico.getTabelaSimbolos());
         try
         {
-            BufferedReader in = new BufferedReader(new FileReader(archive));
+            File inputFile = new File(archive);
+			String nameInputFile = inputFile.getName().substring(0, inputFile.getName().lastIndexOf('.'));
+			BufferedReader in = new BufferedReader(new FileReader(archive));
             System.out.println("Lendo " + archive);
-            OutputStream os = new FileOutputStream("saida_" + archive + ".txt");
-            OutputStreamWriter osw = new OutputStreamWriter(os);
-            BufferedWriter bw = new BufferedWriter(osw);
+            //OutputStream os = new FileOutputStream("saida.txt");
+			FileOutputStream os = new FileOutputStream("saida_" + nameInputFile + ".asm");
+            Writer fileWriter = new BufferedWriter(new OutputStreamWriter(os));
             String pilha = "";
             int other = -1;
             int codigo = 0;
@@ -81,11 +81,11 @@ public class Main {
                     letra = other;
                     other = -1;
                 }
-                
+
                 System.out.println("Símbolo: " + lexico.getAsciiTable().get(letra));
                 String acao = lexico.getMaquinaLexico().transita((String) lexico.getAsciiTable().get(letra));
                 //System.out.println("Ação a ser tomada: " + acao);
-                
+
                 if(acao.equals("empilha"))
                 {
                     pilha = pilha.concat((String) lexico.getAsciiTable().get(letra));
@@ -114,15 +114,15 @@ public class Main {
                         simbolo.setTipo(pilha);
                         codigo++;
                     }
-                
+
                     if(simbolo.getCodigo() != -1)
                     {
                         System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
                         result = sintatico.processaToken(simbolo);
                     }
 
-                    bw.write(pilha);
-                    bw.newLine();
+//                    bw.write(pilha);
+//                    bw.newLine();
                     pilha = "";
                 }
                 else if(acao.equals("desempilha"))
@@ -158,11 +158,11 @@ public class Main {
                             result = sintatico.processaToken(simbolo);
                         }
 
-                        bw.write(pilha);
-                        if(!pilha.equals(""))
-                        {
-                            bw.newLine();
-                        }
+//                        bw.write(pilha);
+//                        if(!pilha.equals(""))
+//                        {
+//                            bw.newLine();
+//                        }
                         pilha = "";
                     }
                 }
@@ -190,18 +190,18 @@ public class Main {
                         simbolo.setTipo(pilha);
                         codigo++;
                     }
-                    
+
                     if(simbolo.getCodigo() != -1)
                     {
                         System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
                         result = sintatico.processaToken(simbolo);
                     }
 
-                    bw.write(pilha);
-                    if(!pilha.equals(""))
-                    {
-                        bw.newLine();
-                    }
+//                    bw.write(pilha);
+//                    if(!pilha.equals(""))
+//                    {
+//                        bw.newLine();
+//                    }
                     pilha = "";
                 }
                 else if(acao.equals("ignora"))
@@ -213,14 +213,15 @@ public class Main {
                     System.out.println("Não existe ação definida!");
                 }
             }
+			fileWriter.write(sintatico.getSemantico().getSaidaASM().toString());
             in.close();
-            bw.close();
-            
+            fileWriter.close();
+
         }
         catch (IOException e)
         {
             System.out.println("Não foi possível ler o arquivo!");
         }
     }
-
 }
+

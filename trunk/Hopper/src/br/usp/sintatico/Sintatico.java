@@ -1,19 +1,27 @@
 package br.usp.sintatico;
 
 import br.usp.lexico.Simbolo;
-
+import br.usp.semantico.Semantico;
+import java.util.Hashtable;
 
 /**
  *
- * @author nathalia
+ * @author nathalia, Bruno Grisi
  */
 public class Sintatico {
 
     MaquinaPrograma maquinaPrograma = new MaquinaPrograma();
+	Semantico semantico;
+	Hashtable tabelaSimbolos;
+
+	public Sintatico(Hashtable tabelaSimbolos) {
+		this.tabelaSimbolos = tabelaSimbolos;
+		this.semantico = new Semantico(tabelaSimbolos);
+	}
 
     public boolean processaToken(Simbolo token)
     {
-        if(maquinaPrograma.processaToken(token))
+        if(maquinaPrograma.processaToken(token, semantico))
         {
             //proximo token
             return true;
@@ -32,6 +40,14 @@ public class Sintatico {
                 return false;
             }
         }
+    }
+
+	public Semantico getSemantico() {
+        return semantico;
+    }
+
+    public void setSemantico(Semantico semantico) {
+        this.semantico = semantico;
     }
 
 }

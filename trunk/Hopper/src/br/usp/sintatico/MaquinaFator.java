@@ -3,6 +3,7 @@ package br.usp.sintatico;
 import br.usp.lexico.Simbolo;
 import br.usp.maquinaestados.MaquinaEstados;
 import br.usp.maquinaestados.Transicao;
+import br.usp.semantico.Semantico;
 
 /**
  *
@@ -39,7 +40,33 @@ public class MaquinaFator extends SubMaquina{
         maquina.setNome("Sintático-Fator");
     }
 
-    public boolean trataToken(Simbolo token) {
+//    public boolean trataToken(Simbolo token) {
+//        boolean retorno = false;
+//
+//        String acao = maquina.transita(token.getTipo());
+//        if(acao.equals("ignora"))
+//        {
+//            return true;
+//        }
+//        else if(acao.equals("chamaIdentificador"))
+//        {
+//            subMaquina = new MaquinaIdentificador();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else if(acao.equals("chamaExpressao"))
+//        {
+//            subMaquina = new MaquinaExpressao();
+//            retorno = subMaquina.processaToken(token);
+//        }
+//        else
+//        {
+//            System.out.println("Fator: Não existe ação definida!");
+//        }
+//
+//        return retorno;
+//    }
+
+	public boolean trataToken(Simbolo token, Semantico semantico) {
         boolean retorno = false;
 
         String acao = maquina.transita(token.getTipo());
@@ -50,12 +77,12 @@ public class MaquinaFator extends SubMaquina{
         else if(acao.equals("chamaIdentificador"))
         {
             subMaquina = new MaquinaIdentificador();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else if(acao.equals("chamaExpressao"))
         {
             subMaquina = new MaquinaExpressao();
-            retorno = subMaquina.processaToken(token);
+            retorno = subMaquina.processaToken(token, semantico);
         }
         else
         {
@@ -63,6 +90,6 @@ public class MaquinaFator extends SubMaquina{
         }
 
         return retorno;
-    }
+	}
 
 }

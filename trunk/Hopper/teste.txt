@@ -10,13 +10,4 @@ program
     while(i<10) do
         i = 10;
     endwhile
-    function boolean par(int numero) beginfunction
-        boolean retorno;
-        if(i%2 == 0) then
-            retorno = true;
-        else
-            retorno = false;
-        endif
-        return retorno;
-    endfunction
 end
