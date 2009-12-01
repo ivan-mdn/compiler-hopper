@@ -65,6 +65,9 @@ public class MaquinaAtribuicao extends SubMaquina{
         }
         else if(acao.equals("chamaIdentificador"))
         {
+			// executa a ação semântica de Atribuição do Lado Esquerdo (identificador)
+			semantico.AtribuicaoID(token);
+
             subMaquina = new MaquinaIdentificador();
             retorno = subMaquina.processaToken(token, semantico);
         }
@@ -72,6 +75,9 @@ public class MaquinaAtribuicao extends SubMaquina{
         {
             subMaquina = new MaquinaExpressao();
             retorno = subMaquina.processaToken(token, semantico);
+
+			// executa a ação semântica de Declaração
+			semantico.AtribuicaoGeraCodigo();
         }
         else
         {

@@ -92,15 +92,16 @@ public class MaquinaPrograma extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-			// executo a ação semântica de incialização do processamento
+			// executa a ação semântica de incialização do processamento
 			if(token.getNome().equals("program")) {
 				semantico.Inicializar();
 			}
 
-			// executo a ação semântica de finalização do processamento
+			// executa a ação semântica de finalização do processamento
 			if(token.getNome().equals("end")) {
 				semantico.Encerrar();
 			}
+
             return true;
         }
         else if(acao.equals("chamaFuncao"))

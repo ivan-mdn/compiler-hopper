@@ -1,0 +1,6 @@
+program
+	int var;
+	int x;
+	var = 1;
+	x = 10;
+end
