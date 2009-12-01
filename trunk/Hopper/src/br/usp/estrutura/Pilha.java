@@ -37,5 +37,12 @@ public class Pilha {
     public void esvaziaPilha(){
         topo = null;
     }
-    
+
+	public Object getTopo() {
+        return topo.getElemento();
+    }
+
+    public void setTopo(Elemento topo) {
+        this.topo = topo;
+    }
 }

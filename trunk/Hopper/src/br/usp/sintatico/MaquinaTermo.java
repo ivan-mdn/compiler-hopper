@@ -67,6 +67,11 @@ public class MaquinaTermo extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
+			// empilha OPERADORES * ou /
+			// Obs.: o OPERADOR % não está implementado!
+			if(token.getNome().equals("+") || token.getNome().equals("-")) {
+				semantico.ExpressaoEmpilhaOperadores(token);
+			}
             return true;
         }
         else if(acao.equals("devolve"))

@@ -4,6 +4,7 @@ import br.usp.lexico.Simbolo;
 import br.usp.maquinaestados.MaquinaEstados;
 import br.usp.maquinaestados.Transicao;
 import br.usp.semantico.Semantico;
+import br.usp.semantico.Token;
 
 /**
  *
@@ -72,6 +73,31 @@ public class MaquinaFator extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
+			// ABRE_PARENTESES
+			if(token.getNome().equals(Token.ABRE_PARENTESES)) {
+				semantico.ExpressaoEmpilhaOperadores(token);
+			}
+
+			// FECHA_PARENTESES
+			if(token.getNome().equals(Token.FECHA_PARENTESES)) {
+				semantico.ExpressaoX5();
+			}
+
+			// MENOS
+			if(token.getNome().equals(Token.MENOS)) {
+				semantico.ExpressaoX7();
+			}
+
+			// FECHA_PARENTESES
+			if(token.getNome().equals(Token.FECHA_PARENTESES)) {
+				semantico.ExpressaoX5();
+			}
+
+			// NUMERO
+			if(semantico.ehNumero(token.getNome())) {
+				semantico.ExpressaoEmpilhaOperandos(token);
+			}
+
             return true;
         }
         else if(acao.equals("chamaIdentificador"))

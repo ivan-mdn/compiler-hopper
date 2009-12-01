@@ -57,7 +57,7 @@ public class MaquinaDeclaracao extends SubMaquina{
         }
         else if(acao.equals("chamaIdentificador")) {
 			// executa ação semântica
-			if (!semantico.Declaracao(token))
+			if (!semantico.DeclaracaoID(token))
 				System.out.println("Deu pau no semantico!");
 
 			subMaquina = new MaquinaIdentificador();

@@ -67,6 +67,15 @@ public class MaquinaExpressao extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
+			// empilha OPERADORES +
+			if(token.getNome().equals("+")) {
+				semantico.ExpressaoX6();
+			}
+
+			// empilha OPERADORES -
+			if(token.getNome().equals("-")) {
+				semantico.ExpressaoX7();
+			}
             return true;
         }
         else if(acao.equals("devolve"))

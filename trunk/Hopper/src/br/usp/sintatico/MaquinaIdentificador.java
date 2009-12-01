@@ -1,10 +1,10 @@
 package br.usp.sintatico;
 
-import br.usp.estrutura.Pilha;
 import br.usp.lexico.Simbolo;
 import br.usp.maquinaestados.MaquinaEstados;
 import br.usp.maquinaestados.Transicao;
 import br.usp.semantico.Semantico;
+import br.usp.semantico.Token;
 
 /**
  *
@@ -66,6 +66,25 @@ public class MaquinaIdentificador extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
+			// empilha OPERADORES
+			if(		   token.getNome().equals(Token.ABRE_COLCHETES)		// vetor
+					|| token.getNome().equals(Token.FECHA_COLCHETES)	// vetor
+					|| token.getNome().equals(Token.ABRE_PARENTESES)	// chamada de função
+					|| token.getNome().equals(Token.FECHA_PARENTESES)	// chamada de função
+					|| token.getNome().equals(Token.VIRGULA)			// separador de parâmetros
+			) {
+				semantico.ExpressaoEmpilhaOperadores(token);
+			}
+
+			// empilha OPERANDOS (número)
+			if(semantico.ehNumero(token.getNome())) {
+				semantico.ExpressaoEmpilhaOperandos(token);
+			}
+			// empilha OPERANDOS (identificador)
+			else {
+				semantico.ExpressaoEmpilhaOperandos(token);
+			}
+
 			return true;
         }
         else if(acao.equals("devolve"))
