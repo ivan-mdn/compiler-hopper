@@ -205,8 +205,7 @@ public class Semantico {
 	// Encerrar programa
 	public void Encerrar() {
 		// define a área de dados
-		this.saidaASM.write(" " + "@" + " " + "=2000 ;");
-		this.saidaASM.write("; area de dados ");
+		this.saidaASM.write(" " + "@" + " " + "=2000 ; area de dados");
 		this.saidaASM.write("\n");
 
 		// reservar espaço de memória para constantes
