@@ -45,7 +45,7 @@ public class Semantico {
 
 	// Declaração de Identificador como Variável
 	public boolean DeclaracaoID(Simbolo token) {
-		// verifica se o identificador já não foi declarado
+		// verifica se o identificador já foi declarado
 		if(token.getDeclarado())
 			return false;
 
