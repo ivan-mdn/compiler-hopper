@@ -83,7 +83,7 @@ public class MaquinaEstados {
                 if(transicao.getSimbolo().equals(valorLido) || transicao.getSimbolo().equals("other"))
                 {
                     int proximoEstado = transicao.getProximoEstado();
-                    System.out.println(nome + ": Transição: " + estadoAtual + "->" + proximoEstado);
+//                    System.out.println(nome + ": Transição: " + estadoAtual + "->" + proximoEstado);
                     if(tabelaEstadosAceitacao.contains(proximoEstado) && reset == true)
                     {
                         setEstadoAtual(estadoInicial);
@@ -93,7 +93,7 @@ public class MaquinaEstados {
                         setEstadoAtual(proximoEstado);
                     }
                     acao = transicao.getAcao();
-                    System.out.println(nome + ": Mudou para o Estado: " + estadoAtual);
+//                    System.out.println(nome + ": Mudou para o Estado: " + estadoAtual);
                     achou = true;
                 }
         }

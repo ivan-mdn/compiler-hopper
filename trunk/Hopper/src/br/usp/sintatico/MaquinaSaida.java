@@ -64,7 +64,7 @@ public class MaquinaSaida extends SubMaquina{
         }
         else
         {
-            System.out.println("Saida: Não existe ação definida!");
+//            System.out.println("Saida: Não existe ação definida!");
         }
 
         return retorno;

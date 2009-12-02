@@ -69,12 +69,18 @@ public class MaquinaExpressao extends SubMaquina{
         {
 			// empilha OPERADORES +
 			if(token.getNome().equals("+")) {
-				semantico.ExpressaoX6();
+				try {
+					semantico.ExpressaoX6();
+				}
+				catch(Exception e){}
 			}
 
 			// empilha OPERADORES -
 			if(token.getNome().equals("-")) {
-				semantico.ExpressaoX7();
+				try {
+					semantico.ExpressaoX7();
+				}
+				catch(Exception e){}
 			}
             return true;
         }
@@ -89,7 +95,7 @@ public class MaquinaExpressao extends SubMaquina{
         }
         else
         {
-            System.out.println("Expressao: Não existe ação definida!");
+//            System.out.println("Expressao: Não existe ação definida!");
         }
 
         return retorno;

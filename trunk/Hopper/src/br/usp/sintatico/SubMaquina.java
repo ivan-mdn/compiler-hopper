@@ -69,13 +69,13 @@ public abstract class SubMaquina {
         if(subMaquina != null)
         {
             retorno = subMaquina.processaToken(token, semantico);
-            System.out.println(subMaquina.maquina.getNome() + ": " + retorno + "/" + subMaquina.maquina.isEstadoAceitacao());
+//            System.out.println(subMaquina.maquina.getNome() + ": " + retorno + "/" + subMaquina.maquina.isEstadoAceitacao());
 
             if(retorno)
             {
                 if(subMaquina.isEstadoAceitacao())
                 {
-                    System.out.println(maquina.getNome() + ": Fechou " + subMaquina.maquina.getNome());
+//                    System.out.println(maquina.getNome() + ": Fechou " + subMaquina.maquina.getNome());
                     subMaquina = null;
                 }
             }
@@ -91,7 +91,7 @@ public abstract class SubMaquina {
                 }
                 else
                 {
-                    System.out.println("Nao processou token e nao eh estado de aceitacao.");
+//                    System.out.println("Nao processou token e nao eh estado de aceitacao.");
                 }
             }
         }

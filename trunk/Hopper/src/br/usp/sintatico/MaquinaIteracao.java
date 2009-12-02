@@ -177,7 +177,7 @@ public class MaquinaIteracao extends SubMaquina{
         }
         else
         {
-            System.out.println("Iteracao: Não existe ação definida!");
+//            System.out.println("Iteracao: Não existe ação definida!");
         }
 
         return retorno;

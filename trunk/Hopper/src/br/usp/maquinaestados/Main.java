@@ -218,11 +218,11 @@ public class Main {
             while (in.ready())
             {
                 int letra = in.read();
-                System.out.println("Símbolo: " + asciiTable.get(letra));
+//                System.out.println("Símbolo: " + asciiTable.get(letra));
                 bw.write((String) asciiTable.get(letra));
                 bw.newLine();
                 String acao = maquina.transita((String) asciiTable.get(letra));
-                System.out.println("Ação a ser tomada: " + acao);
+//                System.out.println("Ação a ser tomada: " + acao);
             }
             in.close();
             bw.close();

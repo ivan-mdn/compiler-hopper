@@ -163,7 +163,7 @@ public class MaquinaCondicional extends SubMaquina{
         }
         else
         {
-            System.out.println("Condicional: Não existe ação definida!");
+//            System.out.println("Condicional: Não existe ação definida!");
         }
 
         return retorno;

@@ -87,7 +87,7 @@ public class MaquinaExpBooleana extends SubMaquina{
         }
         else
         {
-            System.out.println("ExpBooleana: Não existe ação definida!");
+//            System.out.println("ExpBooleana: Não existe ação definida!");
         }
 
         return retorno;

@@ -52,7 +52,7 @@ public class Main {
         }
     }
 
-	// executa o Sintático
+	// executa o Sintático e o Semântico
 	private static void readAndWriteArchive(String archive) {
         Sintatico sintatico = new Sintatico(lexico.getTabelaSimbolos());
         try
@@ -60,9 +60,9 @@ public class Main {
             File inputFile = new File(archive);
 			String nameInputFile = inputFile.getName().substring(0, inputFile.getName().lastIndexOf('.'));
 			BufferedReader in = new BufferedReader(new FileReader(archive));
-            System.out.println("Lendo " + archive);
+            System.out.println("Lendo " + archive + "...");
             //OutputStream os = new FileOutputStream("saida.txt");
-			FileOutputStream os = new FileOutputStream("saida_" + nameInputFile + ".asm");
+			FileOutputStream os = new FileOutputStream(nameInputFile + ".asm");
             Writer fileWriter = new BufferedWriter(new OutputStreamWriter(os));
             String pilha = "";
             int other = -1;
@@ -82,7 +82,7 @@ public class Main {
                     other = -1;
                 }
 
-                System.out.println("Símbolo: " + lexico.getAsciiTable().get(letra));
+//                System.out.println("Símbolo: " + lexico.getAsciiTable().get(letra));
                 String acao = lexico.getMaquinaLexico().transita((String) lexico.getAsciiTable().get(letra));
                 //System.out.println("Ação a ser tomada: " + acao);
 
@@ -117,7 +117,7 @@ public class Main {
 
                     if(simbolo.getCodigo() != -1)
                     {
-                        System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
+//                        System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
                         result = sintatico.processaToken(simbolo);
                     }
 
@@ -154,7 +154,7 @@ public class Main {
 
                         if(simbolo.getCodigo() != -1)
                         {
-                            System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
+//                            System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
                             result = sintatico.processaToken(simbolo);
                         }
 
@@ -193,7 +193,7 @@ public class Main {
 
                     if(simbolo.getCodigo() != -1)
                     {
-                        System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
+//                        System.out.println(simbolo.getTipo() + " [" + simbolo.getNome() + "]");
                         result = sintatico.processaToken(simbolo);
                     }
 
@@ -210,9 +210,17 @@ public class Main {
                 }
                 else
                 {
-                    System.out.println("Não existe ação definida!");
+//                    System.out.println("Não existe ação definida!");
                 }
             }
+			if(sintatico.getSemantico().getErroSintatico() == 0) {
+				System.out.println("Compilacao finalizada com sucesso! Codigo-objeto gerado sem erros.");
+				System.out.println("Execute o montador e, em seguida, o simulador da MVN.");
+				System.out.println("Para maiores informacoes, consulte o Manual de Utilizacao.");
+			}
+			else {
+				System.out.println("Falha na compilacao.");
+			}
 			fileWriter.write(sintatico.getSemantico().getSaidaASM().toString());
             in.close();
             fileWriter.close();

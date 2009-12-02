@@ -1,0 +1,6 @@
+program
+	int var_nao_inicializada;
+	var_nao_declarada = 1;
+	int variavelPosicao;
+	variavelPosicao = 1000;
+end

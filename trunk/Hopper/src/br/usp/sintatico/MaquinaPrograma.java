@@ -94,12 +94,18 @@ public class MaquinaPrograma extends SubMaquina{
         {
 			// executa a ação semântica de incialização do processamento
 			if(token.getNome().equals("program")) {
-				semantico.Inicializar();
+				try {
+					semantico.Inicializar();
+				}
+				catch(Exception e) {}
 			}
 
 			// executa a ação semântica de finalização do processamento
 			if(token.getNome().equals("end")) {
-				semantico.Encerrar();
+				try {
+					semantico.Encerrar();
+				}
+				catch(Exception e) {}
 			}
 
             return true;
@@ -141,7 +147,7 @@ public class MaquinaPrograma extends SubMaquina{
         }
         else
         {
-            System.out.println("Programa: Não existe ação definida!");
+//            System.out.println("Programa: Não existe ação definida!");
         }
 
         return retorno;
