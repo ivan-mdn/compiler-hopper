@@ -70,7 +70,10 @@ public class MaquinaTermo extends SubMaquina{
 			// empilha OPERADORES * ou /
 			// Obs.: o OPERADOR % não está implementado!
 			if(token.getNome().equals("+") || token.getNome().equals("-")) {
-				semantico.ExpressaoEmpilhaOperadores(token);
+				try {
+					semantico.ExpressaoEmpilhaOperadores(token);
+				}
+				catch(Exception e) {}
 			}
             return true;
         }
@@ -85,7 +88,7 @@ public class MaquinaTermo extends SubMaquina{
         }
         else
         {
-            System.out.println("Termo: Não existe ação definida!");
+//            System.out.println("Termo: Não existe ação definida!");
         }
 
         return retorno;

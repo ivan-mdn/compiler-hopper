@@ -57,14 +57,17 @@ public class MaquinaDeclaracao extends SubMaquina{
         }
         else if(acao.equals("chamaIdentificador")) {
 			// executa ação semântica
+			try {
 			if (!semantico.DeclaracaoID(token))
-				System.out.println("Deu pau no semantico!");
+				System.out.println("Erro no semantico!");
+			}
+			catch(Exception e){}
 
 			subMaquina = new MaquinaIdentificador();
             retorno = subMaquina.processaToken(token, semantico);
         }
         else {
-            System.out.println("Declaração: Não existe ação definida!");
+//            System.out.println("Declaração: Não existe ação definida!");
         }
 
         return retorno;

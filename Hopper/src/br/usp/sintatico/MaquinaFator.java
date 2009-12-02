@@ -73,30 +73,33 @@ public class MaquinaFator extends SubMaquina{
         String acao = maquina.transita(token.getTipo());
         if(acao.equals("ignora"))
         {
-			// ABRE_PARENTESES
-			if(token.getNome().equals(Token.ABRE_PARENTESES)) {
-				semantico.ExpressaoEmpilhaOperadores(token);
-			}
+			try {
+				// ABRE_PARENTESES
+				if(token.getNome().equals(Token.ABRE_PARENTESES)) {
+					semantico.ExpressaoEmpilhaOperadores(token);
+				}
 
-			// FECHA_PARENTESES
-			if(token.getNome().equals(Token.FECHA_PARENTESES)) {
-				semantico.ExpressaoX5();
-			}
+				// FECHA_PARENTESES
+				if(token.getNome().equals(Token.FECHA_PARENTESES)) {
+					semantico.ExpressaoX5();
+				}
 
-			// MENOS
-			if(token.getNome().equals(Token.MENOS)) {
-				semantico.ExpressaoX7();
-			}
+				// MENOS
+				if(token.getNome().equals(Token.MENOS)) {
+					semantico.ExpressaoX7();
+				}
 
-			// FECHA_PARENTESES
-			if(token.getNome().equals(Token.FECHA_PARENTESES)) {
-				semantico.ExpressaoX5();
-			}
+				// FECHA_PARENTESES
+				if(token.getNome().equals(Token.FECHA_PARENTESES)) {
+					semantico.ExpressaoX5();
+				}
 
-			// NUMERO
-			if(semantico.ehNumero(token.getNome())) {
-				semantico.ExpressaoEmpilhaOperandos(token);
+				// NUMERO
+				if(semantico.ehNumero(token.getNome())) {
+					semantico.ExpressaoEmpilhaOperandos(token);
+				}
 			}
+			catch(Exception e) {}
 
             return true;
         }
@@ -112,7 +115,7 @@ public class MaquinaFator extends SubMaquina{
         }
         else
         {
-            System.out.println("Fator: Não existe ação definida!");
+//            System.out.println("Fator: Não existe ação definida!");
         }
 
         return retorno;

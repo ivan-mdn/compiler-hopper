@@ -96,7 +96,7 @@ public class MaquinaCondicao extends SubMaquina{
         }
         else
         {
-            System.out.println("Condicao: Não existe ação definida!");
+//            System.out.println("Condicao: Não existe ação definida!");
         }
 
         return retorno;

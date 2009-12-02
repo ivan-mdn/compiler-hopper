@@ -35,8 +35,11 @@ public class Sintatico {
             }
             else
             {
-                //deu erro no programa
-                System.out.println("Deu pau no sintático");
+				//deu erro no Sintático
+				if (this.semantico.getErroSintatico() == 0) {		// POG!!! para as saídas não acumularem "erros repetidos"
+					System.out.println("Erro no sintatico!");
+					this.getSemantico().setErroSintatico(1);
+				}
                 return false;
             }
         }

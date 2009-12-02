@@ -73,16 +73,26 @@ public class MaquinaIdentificador extends SubMaquina{
 					|| token.getNome().equals(Token.FECHA_PARENTESES)	// chamada de função
 					|| token.getNome().equals(Token.VIRGULA)			// separador de parâmetros
 			) {
-				semantico.ExpressaoEmpilhaOperadores(token);
+
+				try {
+					semantico.ExpressaoEmpilhaOperadores(token);
+				}
+				catch(Exception e) {}
 			}
 
 			// empilha OPERANDOS (número)
 			if(semantico.ehNumero(token.getNome())) {
-				semantico.ExpressaoEmpilhaOperandos(token);
+				try {
+					semantico.ExpressaoEmpilhaOperandos(token);
+				}
+				catch(Exception e) {}
 			}
 			// empilha OPERANDOS (identificador)
 			else {
-				semantico.ExpressaoEmpilhaOperandos(token);
+				try {
+					semantico.ExpressaoEmpilhaOperandos(token);
+				}
+				catch(Exception e) {}
 			}
 
 			return true;
@@ -93,7 +103,7 @@ public class MaquinaIdentificador extends SubMaquina{
         }
         else
         {
-            System.out.println("Identificador: Nao existe acao definida!");
+//            System.out.println("Identificador: Nao existe acao definida!");
         }
 
         return retorno;

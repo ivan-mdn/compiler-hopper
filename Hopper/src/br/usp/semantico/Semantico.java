@@ -12,14 +12,15 @@ import java.util.Iterator;
  */
 public class Semantico {
 
-    Memoria memoria;
-	Hashtable tabelaSimbolos;
-	private Pilha		pilhaIDAtual;		// pilha de STRING's
-	private Pilha		pilhaConstantes;	// pilha de INTEGER's
-	private Pilha		pilhaVariaveis;		// pilha de SIMBOLO's
-	private Pilha		pilhaOperandos;		// pilha de SIMBOLO's
-	private Pilha		pilhaOperadores;	// pilha de SIMBOLO's
-	private StringWriter saidaASM;			// arquivo de sáida no formato ASM para MVN
+    Memoria					memoria;
+	Hashtable				tabelaSimbolos;
+	private Pilha			pilhaIDAtual;		// pilha de STRING's
+	private Pilha			pilhaConstantes;	// pilha de INTEGER's
+	private Pilha			pilhaVariaveis;		// pilha de SIMBOLO's
+	private Pilha			pilhaOperandos;		// pilha de SIMBOLO's
+	private Pilha			pilhaOperadores;	// pilha de SIMBOLO's
+	private StringWriter	saidaASM;			// arquivo de sáida no formato ASM para MVN
+	private int				erroSintatico;
 
 	// Construtores
     public Semantico(Hashtable tabelaSimbolos) {
@@ -31,6 +32,7 @@ public class Semantico {
 		this.pilhaOperandos = new Pilha();
 		this.tabelaSimbolos = tabelaSimbolos;
 		this.saidaASM = new StringWriter();
+		this.erroSintatico = 0;
     }
 
 	/*******************
@@ -66,13 +68,13 @@ public class Semantico {
 			// verifica se o identificador já foi declarado
 			Simbolo simbolo = (Simbolo) this.tabelaSimbolos.get(token.getNome());
 			if(!simbolo.getDeclarado()) {
-				System.out.printf("Erro no Semântico: Identificador " + token.getNome() + " não foi declarado! \n");
+				System.out.printf("Erro no Semantico: Identificador " + token.getNome() + " nao foi declarado! \n");
 				return false;
 			}
 
 			//verifica se o identificador foi declarado como Variável
 			if(!simbolo.getCategoria().equals(Simbolo.VARIAVEL)) {
-				System.out.printf("Erro no Semântico: Identificador " + token.getNome() + " não é uma variável! \n");
+				System.out.printf("Erro no Semantico: Identificador " + token.getNome() + " nao eh uma variável! \n");
 				return false;
 			}
 		}
@@ -92,7 +94,7 @@ public class Semantico {
 			valor = Integer.parseInt(((Simbolo) pilhaOperandos.desempilha()).getNome());
 		}
 		catch(Exception e) {
-			System.out.printf("Erro no Semântico: expressão não calculada corretamente! \n");
+			System.out.printf("Erro no Semantico: expressao nao calculada corretamente! \n");
 		}
 		this.saidaASM.write(" " + "LD" + " " + "=" + valor +" ;");
 		this.saidaASM.write("\n");
@@ -204,6 +206,12 @@ public class Semantico {
 
 	// Encerrar programa
 	public void Encerrar() {
+		// encerra o programa pincipal
+		this.saidaASM.write(" " + "HM" + " " + "/0 ;");
+		this.saidaASM.write("\n");
+		this.saidaASM.write(" " + "#" + " " + "/0 ;");
+		this.saidaASM.write("\n");
+
 		// define a área de dados
 		this.saidaASM.write(" " + "@" + " " + "=2000 ; area de dados");
 		this.saidaASM.write("\n");
@@ -226,12 +234,6 @@ public class Semantico {
 			int valor = 0000;
 			token = (Simbolo) pilhaVariaveis.desempilha();
 			nome = token.getNome() + token.getCodigo();
-//			try {
-//				valor = Integer.parseInt(((Simbolo) pilhaVariaveis.desempilha()).getNome());
-//			}
-//			catch(Exception e) {
-//				System.out.printf("Erro no Semântico: variável não inicializada! \n");
-//			}
 			if(token.getCategoria().equals(Simbolo.VETOR)) {
 				this.saidaASM.write("P" + nome + " " + "K" + " " + nome + " ;");
 				this.saidaASM.write("\n");
@@ -274,11 +276,7 @@ public class Semantico {
 	public void incluirConstantesPadrao() {
 		this.saidaASM.write("true" + " " + "K" + " " + "=0001" + " ;");
 		this.saidaASM.write("\n");
-		this.saidaASM.write("TRUE" + " " + "K" + " " + "=0001" + " ;");
-		this.saidaASM.write("\n");
 		this.saidaASM.write("false" + " " + "K" + " " + "=0000" + " ;");
-		this.saidaASM.write("\n");
-		this.saidaASM.write("FALSE" + " " + "K" + " " + "=0000" + " ;");
 		this.saidaASM.write("\n");
 	}
 
@@ -321,6 +319,14 @@ public class Semantico {
 
     public void setSaidaASM(StringWriter saidaASM) {
         this.saidaASM = saidaASM;
+    }
+
+	public int getErroSintatico() {
+        return erroSintatico;
+    }
+
+    public void setErroSintatico(int erroSintatico) {
+        this.erroSintatico = erroSintatico;
     }
 
 	// métodos de finalização do programa

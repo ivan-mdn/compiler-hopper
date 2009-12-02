@@ -161,7 +161,7 @@ public class MaquinaFuncao extends SubMaquina{
         }
         else
         {
-            System.out.println("Funcao: Não existe ação definida!");
+//            System.out.println("Funcao: Não existe ação definida!");
         }
 
         return retorno;

@@ -1,0 +1,13 @@
+				;	 @ =0 ; area do programa 
+0000 8001		;	 LD =1 ;
+0002 97d6		;	 MM var2 ;
+0004 8005		;	 LD =5 ;
+0006 97d6		;	 MM var2 ;
+0008 83e8		;	 LD =1000 ;
+000a 97d4		;	 MM variavelPosicao9 ;
+000c c000		;	 HM /0 ;
+				;	 @ =2000 ; area de dados
+07d0 0001		;	true K =0001 ;
+07d2 0000		;	false K =0000 ;
+07d4 0000		;	variavelPosicao9 K =0 ;
+07d6 0000		;	var2 K =0 ;

@@ -66,7 +66,10 @@ public class MaquinaAtribuicao extends SubMaquina{
         else if(acao.equals("chamaIdentificador"))
         {
 			// executa a ação semântica de Atribuição do Lado Esquerdo (identificador)
-			semantico.AtribuicaoID(token);
+			try {
+				semantico.AtribuicaoID(token);
+			}
+			catch(Exception e){}
 
             subMaquina = new MaquinaIdentificador();
             retorno = subMaquina.processaToken(token, semantico);
@@ -77,11 +80,14 @@ public class MaquinaAtribuicao extends SubMaquina{
             retorno = subMaquina.processaToken(token, semantico);
 
 			// executa a ação semântica de Declaração
-			semantico.AtribuicaoGeraCodigo();
+			try {
+				semantico.AtribuicaoGeraCodigo();
+			}
+			catch(Exception e){}
         }
         else
         {
-            System.out.println("Atribuicao: Não existe ação definida!");
+//            System.out.println("Atribuicao: Não existe ação definida!");
         }
 
         return retorno;

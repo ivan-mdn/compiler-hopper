@@ -1,0 +1,7 @@
+program
+	int var;
+	var = 1;
+	int variavelPosicao;
+	var = 5;
+	variavelPosicao = 1000;
+end

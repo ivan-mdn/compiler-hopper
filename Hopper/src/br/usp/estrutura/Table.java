@@ -63,7 +63,7 @@ public class Table {
     }
     
     public void remove(int position){
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$posicao a ser removida: " + position);
+//        System.out.println("$$$$$$$$$$$$$$$$$$$$$$posicao a ser removida: " + position);
         Node node = first;               
           for(int i=0; i<position-2; i++) {
             node = node.next;
